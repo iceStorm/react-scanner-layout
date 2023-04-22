@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "allowJs": true,
 
     /* Linting */
     "strict": true,
@@ -21,7 +22,9 @@
 
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["./src/lib/components/*"]
+      "@components/*": ["./src/lib/components/*"],
+      "@store": ["./src/lib/store/index.ts"],
+      "@tailwindcss": ["./tailwind.config.js"]
     }
   },
   "include": ["src/lib", "src/demo"],
