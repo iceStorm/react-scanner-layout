@@ -24,9 +24,7 @@ export default defineConfig({
         {
           src: './package.json',
           dest: '.',
-          transform: (content, filename) => {
-            console.log(content)
-
+          transform: (content, _filename) => {
             const json = JSON.parse(content)
             delete json['scripts']
             delete json['devDependencies']
