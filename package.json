@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.demo.ts",
-    "build": "tsc && vite build --config vite.config.lib.ts",
     "preview": "vite preview --config vite.config.demo.ts",
+    "build:lib": "tsc && vite build --config vite.config.lib.ts",
+    "build:demo": "tsc && vite build --config vite.config.demo.ts",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {

@@ -8,23 +8,30 @@ import dts from 'vite-plugin-dts'
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
-    alias: [{ find: '@store', replacement: path.resolve(__dirname, 'src/lib/store/index.ts') }],
+    alias: [
+      { find: '@store/menu', replacement: path.resolve(__dirname, 'src/lib/store/menu/index.ts') },
+      {
+        find: '@store/camera',
+        replacement: path.resolve(__dirname, 'src/lib/store/camera/index.ts'),
+      },
+    ],
   },
 
   plugins: [
     react(),
     dts({
-      entryRoot: 'src',
+      entryRoot: 'src/lib',
       tsConfigFilePath: join(__dirname, 'tsconfig.json'),
       skipDiagnostics: true,
     }),
   ],
 
   build: {
+    outDir: './dist/lib',
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/lib/index.ts',
-      name: 'lib',
+      name: 'types',
       fileName: 'index',
       // Change this to the formats you want to support.
       // Don't forgot to update your package.json as well.

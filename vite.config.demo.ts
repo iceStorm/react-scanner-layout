@@ -10,15 +10,8 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
 
   build: {
-    lib: {
-      // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/main.tsx',
-      name: 'lib',
-      fileName: 'index',
-      // Change this to the formats you want to support.
-      // Don't forgot to update your package.json as well.
-      formats: ['es', 'cjs'],
-    },
+    outDir: './dist/demo',
+    emptyOutDir: true,
     rollupOptions: {
       input: {
         demo: 'index.html',

@@ -20,7 +20,7 @@ export interface ReactScannerLayoutProps {
 }
 
 export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScannerLayoutProps>(
-  function ReactScannerLayout(props, ref) {
+  function ReactScannerLayout(_props, ref) {
     const { addMenuItem, removeMenuItemAt, setMenuVisibility } = useMenuStore()
 
     // handle ref impelmentations here

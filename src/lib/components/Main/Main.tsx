@@ -26,7 +26,7 @@ export function Main() {
     }
   }, [])
 
-  function handleWindowResize(e: UIEvent) {
+  function handleWindowResize() {
     if (canvasRef.current) {
       canvasRef.current.width = window.innerWidth
       canvasRef.current.height = window.innerHeight
