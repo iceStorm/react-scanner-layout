@@ -7,7 +7,7 @@ export function PermissionDenied() {
   return (
     <div
       className={clsx(
-        'h-screen px-10',
+        'h-full px-10',
         'flex flex-col justify-center items-center gap-5',
         'text-center text-white',
       )}

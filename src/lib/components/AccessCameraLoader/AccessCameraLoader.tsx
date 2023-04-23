@@ -6,7 +6,7 @@ import spinnerIcon from '@assets/green-spinner.png'
 export function AccessCameraLoader() {
   return (
     <div
-      className={clsx('h-screen', 'flex flex-col justify-center items-center gap-3', 'text-white')}
+      className={clsx('h-full', 'flex flex-col justify-center items-center gap-3', 'text-white')}
     >
       <motion.img
         src={spinnerIcon}

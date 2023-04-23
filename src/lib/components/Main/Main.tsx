@@ -34,7 +34,7 @@ export function Main() {
   }
 
   return (
-    <main className={clsx('w-screen h-screen')}>
+    <main className={clsx('absolute inset-0')}>
       <canvas ref={canvasRef} className={clsx('absolute top-0 right-0 bottom-0 left-0')} />
 
       <Webcam
