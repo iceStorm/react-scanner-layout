@@ -1,7 +1,9 @@
 export interface CameraState {
+  isAccessingCamera: boolean
   isCameraPaused: boolean
   isCameraPermissionDenied: boolean
+  isCameraPermissionGranted: boolean
 
   setCameraVisibility(visible: boolean): void
-  setCameraPermission(granted: boolean): void
+  finishAccessingCamera(granted: boolean): void
 }

@@ -8,6 +8,7 @@ function App() {
   useEffect(() => {
     if (scannerLayoutRef.current) {
       // scannerLayoutRef.current.setPosition('bottom')
+      // scannerLayoutRef.current.removeMenuItemAt(0)
     }
   }, [])
 

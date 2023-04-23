@@ -4,8 +4,9 @@ import { defineConfig } from 'vite'
 
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
-import cssInjection from 'vite-plugin-css-injected-by-js'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import cssInjection from 'vite-plugin-css-injected-by-js'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,10 +19,19 @@ export default defineConfig({
       skipDiagnostics: true,
     }),
     cssInjection(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: './package.json',
+          dest: './dist/lib',
+        },
+      ],
+    }),
   ],
 
   build: {
     outDir: './dist/lib',
+    copyPublicDir: false,
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/lib/index.ts',

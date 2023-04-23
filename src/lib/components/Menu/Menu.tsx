@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
@@ -16,11 +16,12 @@ const panelMargin = 12 + 2
 
 export function Menu() {
   const {
-    isHidden: isMenuHidden,
-    setMenuVisibility,
     items: menuItems,
+    isVisible: isMenuHidden,
     position: menuPosition,
+    setMenuVisibility,
   } = useMenuStore()
+
   const { isCameraPaused, setCameraVisibility } = useCameraStore()
 
   const ref = useRef<HTMLDivElement>(null)
@@ -36,6 +37,24 @@ export function Menu() {
 
     return menuPosition === 'top' ? VscTriangleUp : VscTriangleDown
   }, [isMenuHidden, menuPosition])
+
+  const marginTop = useMemo(() => {
+    return isMenuHidden && menuPosition === 'top'
+      ? `-${(ref.current?.clientHeight ?? 0) + (panelMargin ?? 0)}px`
+      : 0
+  }, [isMenuHidden, menuPosition])
+
+  const marginBottom = useMemo(() => {
+    return isMenuHidden && menuPosition === 'bottom'
+      ? `-${(ref.current?.clientHeight ?? 0) + (panelMargin ?? 0)}px`
+      : 0
+  }, [isMenuHidden, menuPosition])
+
+  // useLayoutEffect(() => {
+  //   setTimeout(() => {
+  //     setMenuVisibility(true)
+  //   }, 3000)
+  // }, [])
 
   return (
     <header
@@ -54,16 +73,18 @@ export function Menu() {
           'bg-stone-900 border border-stone-700',
           'rounded-md overflow-hidden',
         )}
+        transition={{}}
+        initial={{
+          // marginTop,
+          // marginBottom: -marginBottom,
+          // marginBottom: -300,
+          opacity: 0,
+          // animationDelay: '0.5s',
+        }}
         animate={{
-          marginTop:
-            isMenuHidden && menuPosition === 'top'
-              ? `-${(ref.current?.clientHeight ?? 0) + (panelMargin ?? 0)}px`
-              : 0,
-
-          marginBottom:
-            isMenuHidden && menuPosition === 'bottom'
-              ? `-${(ref.current?.clientHeight ?? 0) + (panelMargin ?? 0)}px`
-              : 0,
+          marginTop,
+          marginBottom,
+          opacity: 1,
         }}
         style={{ minWidth: '300px' }}
       >
@@ -134,6 +155,7 @@ function HeaderItemView(props: HeaderItemViewProps) {
         'flex flex-col items-center',
         'transition-all duration-100 hover:bg-stone-800',
       )}
+      style={{ minWidth: '85px' }}
       onClick={() => {
         onClick?.()
         setActiveItem(key)

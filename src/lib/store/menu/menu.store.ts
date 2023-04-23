@@ -4,7 +4,7 @@ import { MenuState } from './menu.state'
 
 export const useMenuStore = create<MenuState>()((set) => ({
   items: [],
-  isHidden: false,
+  isVisible: false,
   position: 'top',
 
   setPosition(position) {
@@ -13,7 +13,7 @@ export const useMenuStore = create<MenuState>()((set) => ({
 
   setMenuVisibility(visible) {
     return set(() => ({
-      isHidden: visible,
+      isVisible: visible,
     }))
   },
 
@@ -26,7 +26,6 @@ export const useMenuStore = create<MenuState>()((set) => ({
           Replaced by the old one by the new one.`.trim(),
         )
 
-        // const clonedItems = [...state.items]
         state.items.splice(previousIndex, 1, newItem)
 
         return {
@@ -41,9 +40,10 @@ export const useMenuStore = create<MenuState>()((set) => ({
   },
 
   removeMenuItemAt(index) {
-    return set((state) => ({
-      items: state.items.splice(index, 1),
-    }))
+    return set((state) => {
+      state.items.splice(index, 1)
+      return { items: state.items }
+    })
   },
 
   setActiveItem(key) {

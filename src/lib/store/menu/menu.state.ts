@@ -16,7 +16,7 @@ export type MenuPosition = 'top' | 'bottom'
 
 export interface MenuState {
   items: MenuItem[]
-  isHidden: boolean
+  isVisible: boolean
   position: MenuPosition
 
   setPosition(position: MenuPosition): void
