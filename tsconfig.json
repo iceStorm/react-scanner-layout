@@ -24,6 +24,7 @@
     "paths": {
       "@components/*": ["./src/lib/components/*"],
       "@store/*": ["./src/lib/store/*"],
+      "@menu-items/*": ["./src/lib/menu-items/*"],
       "@tailwindcss": ["./tailwind.config.js"]
     }
   },

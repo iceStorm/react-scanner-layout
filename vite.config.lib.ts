@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
+import cssInjection from 'vite-plugin-css-injected-by-js'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,6 +14,11 @@ export default defineConfig({
       {
         find: '@store/camera',
         replacement: path.resolve(__dirname, 'src/lib/store/camera/index.ts'),
+      },
+
+      {
+        find: '@menu-items/MenuBarcodes',
+        replacement: path.resolve(__dirname, 'src/lib/menu-items/MenuBarcodes/index.ts'),
       },
     ],
   },
@@ -24,6 +30,7 @@ export default defineConfig({
       tsConfigFilePath: join(__dirname, 'tsconfig.json'),
       skipDiagnostics: true,
     }),
+    // cssInjection(),
   ],
 
   build: {
