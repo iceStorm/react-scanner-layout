@@ -1,16 +1,6 @@
 import { create } from 'zustand'
 
-import { CameraState, HeaderState } from './store.state'
-
-export const useHeaderStore = create<HeaderState>()((set) => ({
-  isMenuHidden: false,
-
-  setMenuVisibility(visible) {
-    return set(() => ({
-      isMenuHidden: visible,
-    }))
-  },
-}))
+import { CameraState } from './camera.state'
 
 export const useCameraStore = create<CameraState>()((set) => ({
   isCameraPaused: false,

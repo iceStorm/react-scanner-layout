@@ -23,7 +23,7 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["./src/lib/components/*"],
-      "@store": ["./src/lib/store/index.ts"],
+      "@store/*": ["./src/lib/store/*"],
       "@tailwindcss": ["./tailwind.config.js"]
     }
   },

@@ -12,7 +12,8 @@ import { CiBarcode } from 'react-icons/ci'
 import { BsFillPlayFill, BsFillStopFill } from 'react-icons/bs'
 import { VscTriangleDown, VscTriangleUp } from 'react-icons/vsc'
 
-import { useCameraStore, useHeaderStore } from '@store'
+import { useCameraStore } from '@store/camera'
+import { useMenuStore } from '@store/menu'
 
 interface HeaderItem {
   title: string
@@ -45,7 +46,7 @@ const panelMargin = 12
 export function Header() {
   // const [selectedItem, setSelectedItem] = useState<HeaderItem>()
 
-  const { isMenuHidden, setMenuVisibility } = useHeaderStore()
+  const { isMenuHidden, setMenuVisibility } = useMenuStore()
   const { isCameraPaused, setCameraVisibility } = useCameraStore()
 
   const ref = useRef<HTMLDivElement>(null)
