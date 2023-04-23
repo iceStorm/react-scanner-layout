@@ -1,36 +1,23 @@
-import path, { join } from 'path'
+import { join } from 'path'
 
 import { defineConfig } from 'vite'
 
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import cssInjection from 'vite-plugin-css-injected-by-js'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  resolve: {
-    alias: [
-      { find: '@store/menu', replacement: path.resolve(__dirname, 'src/lib/store/menu/index.ts') },
-      {
-        find: '@store/camera',
-        replacement: path.resolve(__dirname, 'src/lib/store/camera/index.ts'),
-      },
-
-      {
-        find: '@menu-items/MenuBarcodes',
-        replacement: path.resolve(__dirname, 'src/lib/menu-items/MenuBarcodes/index.ts'),
-      },
-    ],
-  },
-
   plugins: [
+    tsconfigPaths(),
     react(),
     dts({
       entryRoot: 'src/lib',
       tsConfigFilePath: join(__dirname, 'tsconfig.json'),
       skipDiagnostics: true,
     }),
-    // cssInjection(),
+    cssInjection(),
   ],
 
   build: {

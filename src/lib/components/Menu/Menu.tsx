@@ -132,7 +132,7 @@ function HeaderItemView(props: HeaderItemViewProps) {
       className={clsx(
         'flex-1 p-3',
         'flex flex-col items-center',
-        'transition-all duration-100 hover:bg-stone-700',
+        'transition-all duration-100 hover:bg-stone-800',
       )}
       onClick={() => {
         onClick?.()
@@ -140,7 +140,7 @@ function HeaderItemView(props: HeaderItemViewProps) {
       }}
     >
       <div
-        className={clsx('flex flex-col items-center gap-1', {
+        className={clsx('flex flex-col items-center gap-1', 'transition-all duration-300', {
           'text-gray-500': toggleActiveOnClick && !isActive,
           'text-white': !toggleActiveOnClick || isActive,
         })}

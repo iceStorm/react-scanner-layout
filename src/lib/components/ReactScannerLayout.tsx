@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle } from 'react'
 
+import clsx from 'clsx'
 import { ConditionalPick } from 'type-fest'
 
 import { RiBarcodeLine } from 'react-icons/ri'
@@ -10,9 +11,11 @@ import { useMenuStore, MenuState } from '@store/menu'
 import { MenuBarcodesPanel } from '@menu-items/MenuBarcodes'
 
 import '../styles.scss'
+import pip from '@assets/store-scanner-beep.mp3'
+const pipAudio = new Audio(pip)
+
 import { Menu } from './Menu'
 import { Main } from './Main'
-import clsx from 'clsx'
 
 export interface ReactScannerLayoutMenu {
   title: React.ReactNode
@@ -75,7 +78,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
         icon: <IoMusicalNote size={20} />,
         toggleActiveOnClick: true,
         onClick() {
-          console.log('item clicked')
+          pipAudio.play()
         },
       })
     }
