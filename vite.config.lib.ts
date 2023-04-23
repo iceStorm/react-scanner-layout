@@ -23,7 +23,16 @@ export default defineConfig({
       targets: [
         {
           src: './package.json',
-          dest: './dist/lib',
+          dest: '.',
+          transform: (content, filename) => {
+            console.log(content)
+
+            const json = JSON.parse(content)
+            delete json['scripts']
+            delete json['devDependencies']
+
+            return JSON.stringify(json, null, 2)
+          },
         },
       ],
     }),

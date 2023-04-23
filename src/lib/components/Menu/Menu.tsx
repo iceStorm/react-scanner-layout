@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
@@ -49,12 +49,6 @@ export function Menu() {
       ? `-${(ref.current?.clientHeight ?? 0) + (panelMargin ?? 0)}px`
       : 0
   }, [isMenuHidden, menuPosition])
-
-  // useLayoutEffect(() => {
-  //   setTimeout(() => {
-  //     setMenuVisibility(true)
-  //   }, 3000)
-  // }, [])
 
   return (
     <header
