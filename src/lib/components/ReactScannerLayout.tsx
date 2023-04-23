@@ -125,8 +125,9 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                className="h-full"
               >
-                {loaderComponent} ?? <AccessCameraLoader />
+                {loaderComponent ?? <AccessCameraLoader />}
               </motion.div>
             )}
           </AnimatePresence>
@@ -136,8 +137,9 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
               transition={{ duration: 0.5 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              className="h-full"
             >
-              {permissionDeniedComponent} ?? <PermissionDenied />
+              {permissionDeniedComponent ?? <PermissionDenied />}
             </motion.div>
           )}
 
