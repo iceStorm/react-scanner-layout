@@ -11,10 +11,11 @@ import { CiBarcode } from 'react-icons/ci'
 import { useMenuStore, MenuState } from '@store/menu'
 import { useCameraStore } from '@store/camera'
 
-import { checkCameraPermission } from '@utils/camera.utils'
-import { sleep } from '@utils/async.utils'
+import { checkCameraPermission, getCameraList } from '@utils/camera.utils'
+// import { sleep } from '@utils/async.utils'
 
 import { MenuBarcodesPanel } from '@menu-items/MenuBarcodes'
+import { MenuCamera } from '@menu-items/MenuCamera'
 
 import '../styles.scss'
 import pip from '@assets/store-scanner-beep.mp3'
@@ -24,6 +25,7 @@ import { Menu } from './Menu'
 import { Main } from './Main'
 import { AccessCameraLoader } from './AccessCameraLoader'
 import { PermissionDenied } from './PermissionDenied'
+import { shallow } from 'zustand/shallow'
 
 // extracting only functions from the menu
 export type ReactScannerLayoutRef = ConditionalPick<MenuState, (param: never) => void>
@@ -40,16 +42,44 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
   function ReactScannerLayout(props, ref) {
     const { loaderComponent, permissionDeniedComponent } = props
 
-    const {
-      isCameraPaused,
+    const [
       isAccessingCamera,
       isCameraPermissionDenied,
       isCameraPermissionGranted,
       finishAccessingCamera,
-    } = useCameraStore()
+      setCameraList,
+      setSelectedCamera,
+      // setSelectedCameraSettings,
+    ] = useCameraStore(
+      (state) => [
+        state.isAccessingCamera,
+        state.isCameraPermissionDenied,
+        state.isCameraPermissionGranted,
+        state.finishAccessingCamera,
+        state.setCameraList,
+        state.setSelectedCamera,
+      ],
+      shallow,
+    )
 
-    const { addMenuItem, removeMenuItemAt, setMenuVisibility, setPosition, setActiveItem } =
-      useMenuStore()
+    const [
+      addMenuItem,
+      removeMenuItemAt,
+      setMenuVisibility,
+      setPosition,
+      setActiveItem,
+      hideActiveMenuPanel,
+    ] = useMenuStore(
+      (state) => [
+        state.addMenuItem,
+        state.removeMenuItemAt,
+        state.setMenuVisibility,
+        state.setPosition,
+        state.setActiveItem,
+        state.hideActiveMenuPanel,
+      ],
+      shallow,
+    )
 
     // handle ref impelmentations here
     useImperativeHandle(ref, () => ({
@@ -58,11 +88,11 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
       setMenuVisibility,
       setPosition,
       setActiveItem,
+      hideActiveMenuPanel,
     }))
 
     useEffect(() => {
       addDefaultMenuItems()
-
       requestCameraPermission()
     }, [])
 
@@ -78,7 +108,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
         key: 'camera',
         title: 'Camera',
         icon: <IoVideocam size={20} />,
-        settingsPanel: <MenuBarcodesPanel />,
+        settingsPanel: <MenuCamera />,
       })
 
       addMenuItem({
@@ -91,7 +121,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
       addMenuItem({
         key: 'sounds',
         title: (
-          <p className="text-xs">
+          <p className="">
             Sound <br /> Effects
           </p>
         ),
@@ -105,10 +135,23 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
 
     async function requestCameraPermission() {
       try {
-        await sleep(2000)
+        // await sleep(2000)
 
-        await checkCameraPermission()
+        const cameraSettings = await checkCameraPermission()
+        const cameraList = await getCameraList()
+
+        console.log('Camera settings:', cameraSettings)
+
         finishAccessingCamera(true)
+        setCameraList(
+          cameraList,
+          // .concat(cameraList)
+          // .concat(cameraList)
+          // .concat(cameraList)
+          // .concat(cameraList)
+          // .concat(cameraList),
+        )
+        setSelectedCamera(cameraList[0])
       } catch (error) {
         console.error('Error when accessing camera:', error)
         finishAccessingCamera(false)
@@ -117,7 +160,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
 
     return (
       <div id="react-scanner-layout">
-        <div className={clsx('fixed top-0 right-0 bottom-0 left-0', 'bg-black')}>
+        <div className={clsx('fixed inset-0', 'bg-black', 'text-xs xl:text-sm text-white')}>
           <AnimatePresence>
             {isAccessingCamera && (
               <motion.div
@@ -146,19 +189,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
           {isCameraPermissionGranted && (
             <>
               <Menu />
-
-              <AnimatePresence>
-                {!isCameraPaused && (
-                  <motion.div
-                    transition={{ duration: 0.5 }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <Main />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <Main />
             </>
           )}
         </div>

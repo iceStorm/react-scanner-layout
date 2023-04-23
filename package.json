@@ -1,6 +1,6 @@
 {
   "name": "react-scanner-layout",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "license": "MIT",
   "main": "./index.js",
@@ -38,6 +38,9 @@
     "zustand": "^4.3.7"
   },
   "devDependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.12.1",
     "@types/node": "^18.15.13",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
@@ -49,8 +52,10 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "immer": "^10.0.1",
     "postcss": "^8.4.23",
     "postcss-replace": "^2.0.1",
+    "rc-switch": "^4.1.0",
     "react-icons": "^4.8.0",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.62.0",

@@ -4,21 +4,32 @@ import { MenuState } from './menu.state'
 
 export const useMenuStore = create<MenuState>()((set) => ({
   items: [],
-  isVisible: false,
+  isVisible: true,
   position: 'top',
 
   setPosition(position) {
-    return set(() => ({ position: position }))
+    set(() => ({ position: position }))
   },
 
   setMenuVisibility(visible) {
-    return set(() => ({
-      isVisible: visible,
-    }))
+    set((state) => {
+      if (!visible) {
+        state.items
+          .filter((i) => Boolean(i.settingsPanel))
+          .forEach((i) => {
+            i.isActive = false
+          })
+      }
+
+      return {
+        items: state.items,
+        isVisible: visible,
+      }
+    })
   },
 
   addMenuItem(newItem) {
-    return set((state) => {
+    set((state) => {
       const previousIndex = state.items.findIndex((i) => i.key === newItem.key)
       if (previousIndex !== -1) {
         console.warn(
@@ -40,15 +51,15 @@ export const useMenuStore = create<MenuState>()((set) => ({
   },
 
   removeMenuItemAt(index) {
-    return set((state) => {
+    set((state) => {
       state.items.splice(index, 1)
       return { items: state.items }
     })
   },
 
   setActiveItem(key) {
-    return set((state) => {
-      console.log('key:', key)
+    set((state) => {
+      // console.log('key:', key)
 
       const itemIndex = state.items.findIndex((i) => i.key === key)
       if (itemIndex === -1) {
@@ -56,7 +67,28 @@ export const useMenuStore = create<MenuState>()((set) => ({
         return {}
       }
 
+      // close other panels
+      state.items
+        .filter((i) => i.key !== key && Boolean(i.settingsPanel))
+        .forEach((i) => (i.isActive = false))
+
+      // toggle clicked panels
       state.items[itemIndex].isActive = !state.items[itemIndex].isActive
+
+      return {
+        items: state.items,
+      }
+    })
+  },
+
+  hideActiveMenuPanel() {
+    return set((state) => {
+      const activeMenuPanels = state.items.some((i) => Boolean(i.settingsPanel) && i.isActive)
+
+      if (activeMenuPanels) {
+        console.log('hideActiveMenuPanel...')
+        state.items.filter((i) => Boolean(i.settingsPanel)).forEach((i) => (i.isActive = false))
+      }
 
       return {
         items: state.items,

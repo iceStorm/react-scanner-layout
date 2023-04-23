@@ -3,18 +3,26 @@ export async function getCameraList() {
   return allDevices.filter((d) => d.kind === 'videoinput')
 }
 
-/**
- * @deprecated unstable method.
- */
-export async function haveCameraPermission() {
-  const allDevices = await getCameraList()
-  return allDevices.every((d) => d.kind === 'videoinput' && d.label)
-}
-
 export async function checkCameraPermission() {
-  const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: {
+      width: {
+        ideal: 3840,
+      },
+      height: {
+        ideal: 2160,
+      },
+    },
+  })
+  const streamSettings = getStreamSettings(stream)
+
   stream.getVideoTracks().forEach((track) => track.stop())
-  return true
+
+  return streamSettings
 }
 
 // DOMException: Requested device not found
+
+export function getStreamSettings(stream: MediaStream) {
+  return stream.getVideoTracks()[0].getSettings()
+}

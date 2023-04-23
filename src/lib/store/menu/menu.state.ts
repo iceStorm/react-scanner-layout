@@ -25,4 +25,5 @@ export interface MenuState {
   removeMenuItemAt(index: number): void
 
   setActiveItem(key: string): void
+  hideActiveMenuPanel(): void
 }
