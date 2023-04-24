@@ -12,8 +12,6 @@ export function MenuPanels({ headerHeight }: MenuPanelsProps) {
   const [windowHeight, setWindowHeight] = useState(0)
 
   useEffect(() => {
-    console.log('headerHeight:', headerHeight)
-
     window.addEventListener('resize', handleWindowResize)
 
     return () => {
@@ -22,7 +20,6 @@ export function MenuPanels({ headerHeight }: MenuPanelsProps) {
   }, [])
 
   function handleWindowResize() {
-    console.log('window.innerHeight:', window.innerHeight)
     setWindowHeight(window.innerHeight)
   }
 
@@ -55,7 +52,7 @@ export function MenuPanels({ headerHeight }: MenuPanelsProps) {
             )}
             style={{ maxHeight: maxHeight }}
           >
-            <header className={clsx('px-5 py-3 border-b border-stone-700', 'font-bold')}>
+            <header className={clsx('px-5 py-3 border-b border-stone-800', 'font-bold')}>
               {i.title} settings.
             </header>
 

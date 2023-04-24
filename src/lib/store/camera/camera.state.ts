@@ -26,4 +26,5 @@ export interface CameraState {
   setSelectedCameraSettings(settings: CameraSettings): void
 
   finishAccessingCamera(granted: boolean): void
+  addResolution(res: CameraResolution): void
 }

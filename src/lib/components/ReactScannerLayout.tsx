@@ -52,6 +52,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
       setCameraList,
       setSelectedCamera,
       setSelectedCameraSettings,
+      addResolution,
     ] = useCameraStore(
       (state) => [
         state.isAccessingCamera,
@@ -61,6 +62,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
         state.setCameraList,
         state.setSelectedCamera,
         state.setSelectedCameraSettings,
+        state.addResolution,
       ],
       shallow,
     )
@@ -156,6 +158,12 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
         )
         setSelectedCamera(cameraList[0])
         setSelectedCameraSettings(cameraSettings)
+
+        addResolution({
+          name: 'default',
+          width: cameraSettings.width || 0,
+          height: cameraSettings.height || 0,
+        })
       } catch (error) {
         console.error('Error when accessing camera:', error)
         finishAccessingCamera(false)

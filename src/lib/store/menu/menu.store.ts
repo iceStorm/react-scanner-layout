@@ -31,8 +31,6 @@ export const useMenuStore = create(
 
     addMenuItem(newItem) {
       set((state) => {
-        console.log('addMenuItem:', state.items)
-
         const previousIndex = state.items.findIndex((i) => i.key === newItem.key)
         if (previousIndex !== -1) {
           console.warn(

@@ -2,46 +2,18 @@ import { useEffect } from 'react'
 
 import clsx from 'clsx'
 import { shallow } from 'zustand/shallow'
-
 import Checkbox from '@mui/material/Checkbox'
 
-import { CameraResolution, useCameraStore } from '@store/camera'
+import { useCameraStore } from '@store/camera'
 
 import styles from './MenuCamera.module.scss'
-
-const cametaResolutionList: CameraResolution[] = [
-  {
-    name: 'Default',
-    width: 1,
-    height: 2,
-  },
-  {
-    name: 'HD',
-    width: 1280,
-    height: 720,
-  },
-  {
-    name: 'Full HD',
-    width: 1920,
-    height: 1080,
-  },
-  {
-    name: '2K',
-    width: 2048,
-    height: 1080,
-  },
-  {
-    name: '4K',
-    width: 3840,
-    height: 2160,
-  },
-]
 
 export function MenuCamera() {
   const [
     cameraList,
     selectedCamera,
     selectedCameraSettings,
+    avalableResolutions,
     setSelectedCamera,
     setSelectedCameraSettings,
   ] = useCameraStore(
@@ -49,6 +21,7 @@ export function MenuCamera() {
       state.cameraList,
       state.selectedCamera,
       state.selectedCameraSettings,
+      state.avalableResolutions,
       state.setSelectedCamera,
       state.setSelectedCameraSettings,
     ],
@@ -92,7 +65,7 @@ export function MenuCamera() {
         </h2>
 
         <div className={styles.resolutionGrid}>
-          {cametaResolutionList.map(({ width, height, name }) => {
+          {avalableResolutions.map(({ width, height, name }) => {
             return (
               <button
                 key={name}
