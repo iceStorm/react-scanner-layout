@@ -63,7 +63,7 @@ export function Main() {
     console.log('Width: ' + settings.width + 'px')
     console.log('Height: ' + settings.height + 'px')
 
-    // setSelectedCameraSettings(settings)
+    setSelectedCameraSettings(settings)
 
     if (
       selectedCameraSettings?.width &&
@@ -75,7 +75,7 @@ export function Main() {
         settings.width < selectedCameraSettings.width ||
         settings.height < selectedCameraSettings.height
       ) {
-        setSelectedCameraSettings(settings)
+        // setSelectedCameraSettings(settings)
       }
     }
   }

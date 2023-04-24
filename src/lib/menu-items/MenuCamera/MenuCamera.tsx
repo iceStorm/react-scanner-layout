@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import clsx from 'clsx'
 import { shallow } from 'zustand/shallow'
 
-import Switch from '@mui/material/Switch'
+import Checkbox from '@mui/material/Checkbox'
 
 import { CameraResolution, useCameraStore } from '@store/camera'
 
@@ -87,7 +87,9 @@ export function MenuCamera() {
       </section>
 
       <section>
-        <h2 className="mb-3">Set resolution for the selected camera "{selectedCamera?.label}"</h2>
+        <h2 className="mb-3">
+          Select a resolution for the selected camera "{selectedCamera?.label}"
+        </h2>
 
         <div className={styles.resolutionGrid}>
           {cametaResolutionList.map(({ width, height, name }) => {
@@ -119,12 +121,13 @@ export function MenuCamera() {
       </section>
 
       <section>
-        <h2 className="mb-3">Other settings.</h2>
+        <h2 className="mb-3 setting-headline">Other settings.</h2>
 
-        <p className="-ml-2">
+        <p className="-ml-2 flex items-center">
           <label>
-            <Switch
+            <Checkbox
               size="small"
+              color="primary"
               checked={Boolean(selectedCameraSettings?.mirrored)}
               onChange={(e) => setSelectedCameraSettings({ mirrored: e.target.checked })}
             />

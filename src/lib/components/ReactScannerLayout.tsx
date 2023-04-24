@@ -1,5 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle } from 'react'
 
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+
 import clsx from 'clsx'
 import { ConditionalPick } from 'type-fest'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -49,7 +51,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
       finishAccessingCamera,
       setCameraList,
       setSelectedCamera,
-      // setSelectedCameraSettings,
+      setSelectedCameraSettings,
     ] = useCameraStore(
       (state) => [
         state.isAccessingCamera,
@@ -58,6 +60,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
         state.finishAccessingCamera,
         state.setCameraList,
         state.setSelectedCamera,
+        state.setSelectedCameraSettings,
       ],
       shallow,
     )
@@ -152,6 +155,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
           // .concat(cameraList),
         )
         setSelectedCamera(cameraList[0])
+        setSelectedCameraSettings(cameraSettings)
       } catch (error) {
         console.error('Error when accessing camera:', error)
         finishAccessingCamera(false)
@@ -160,39 +164,41 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
 
     return (
       <div id="react-scanner-layout">
-        <div className={clsx('fixed inset-0', 'bg-black', 'text-xs xl:text-sm text-white')}>
-          <AnimatePresence>
-            {isAccessingCamera && (
+        <ThemeProvider theme={createTheme({ palette: { mode: 'dark' } })}>
+          <div className={clsx('fixed inset-0', 'bg-black', 'text-xs xl:text-sm text-white')}>
+            <AnimatePresence>
+              {isAccessingCamera && (
+                <motion.div
+                  transition={{ duration: 0.5 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="h-full"
+                >
+                  {loaderComponent ?? <AccessCameraLoader />}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {isCameraPermissionDenied && (
               <motion.div
                 transition={{ duration: 0.5 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
                 className="h-full"
               >
-                {loaderComponent ?? <AccessCameraLoader />}
+                {permissionDeniedComponent ?? <PermissionDenied />}
               </motion.div>
             )}
-          </AnimatePresence>
 
-          {isCameraPermissionDenied && (
-            <motion.div
-              transition={{ duration: 0.5 }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="h-full"
-            >
-              {permissionDeniedComponent ?? <PermissionDenied />}
-            </motion.div>
-          )}
-
-          {isCameraPermissionGranted && (
-            <>
-              <Menu />
-              <Main />
-            </>
-          )}
-        </div>
+            {isCameraPermissionGranted && (
+              <>
+                <Menu />
+                <Main />
+              </>
+            )}
+          </div>
+        </ThemeProvider>
       </div>
     )
   },
