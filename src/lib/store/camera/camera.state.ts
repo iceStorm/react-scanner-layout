@@ -18,7 +18,7 @@ export interface CameraState {
 
   finishAccessingCamera(granted: boolean): void
   addResolution(res: CameraResolution): void
-  addSupportedBarcodeFormat(format: string): void
+  toggleSupportedBarcodeFormat(format: string): void
 }
 
 export type CameraResolution = {

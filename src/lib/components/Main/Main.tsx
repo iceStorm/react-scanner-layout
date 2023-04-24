@@ -60,22 +60,22 @@ export function Main() {
   function handleUserMedia(stream: MediaStream) {
     const settings = getStreamSettings(stream)
 
-    console.log('Width: ' + settings.width + 'px')
-    console.log('Height: ' + settings.height + 'px')
-
-    setSelectedCameraSettings(settings)
+    console.log('Actual Width: ' + settings.width + 'px')
+    console.log('Actual Height: ' + settings.height + 'px')
+    // console.log('Picked Width: ' + selectedCameraSettings?.width + 'px')
+    // console.log('Picked Height: ' + selectedCameraSettings?.height + 'px')
 
     if (
       selectedCameraSettings?.width &&
-      selectedCameraSettings.height &&
+      selectedCameraSettings?.height &&
       settings.width &&
       settings.height
     ) {
       if (
-        settings.width < selectedCameraSettings.width ||
-        settings.height < selectedCameraSettings.height
+        settings.width !== selectedCameraSettings.width ||
+        settings.height !== selectedCameraSettings.height
       ) {
-        // setSelectedCameraSettings(settings)
+        setSelectedCameraSettings(settings)
       }
     }
   }

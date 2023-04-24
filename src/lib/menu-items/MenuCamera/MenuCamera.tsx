@@ -42,14 +42,9 @@ export function MenuCamera() {
             return (
               <button
                 key={camera.deviceId}
-                className={clsx(
-                  'border border-stone-700',
-                  'px-5 py-2',
-                  'rounded-md cursor-pointer',
-                  {
-                    'bg-stone-700': camera.deviceId === selectedCamera?.deviceId,
-                  },
-                )}
+                className={clsx('btn-toggle', {
+                  active: camera.deviceId === selectedCamera?.deviceId,
+                })}
                 onClick={() => setSelectedCamera(camera)}
               >
                 {camera.label}
@@ -69,23 +64,16 @@ export function MenuCamera() {
             return (
               <button
                 key={name}
-                className={clsx(
-                  'px-5 py-2',
-                  'flex flex-col items-center gap-1',
-                  'border border-stone-700',
-                  'rounded-md cursor-pointer',
-                  {
-                    'bg-stone-700':
-                      selectedCameraSettings?.width === width &&
-                      selectedCameraSettings?.height === height,
-                  },
-                )}
-                style={{ minWidth: '100px' }}
+                className={clsx('btn-toggle', {
+                  active:
+                    selectedCameraSettings?.width === width &&
+                    selectedCameraSettings?.height === height,
+                })}
                 onClick={() => setSelectedCameraSettings({ width, height })}
               >
-                <span>{name}</span>
+                <p className="mb-1">{name}</p>
                 <p>
-                  <span>{width}</span>:<span>{height}</span>
+                  <span>{width}</span> × <span>{height}</span>
                 </p>
               </button>
             )
@@ -96,7 +84,7 @@ export function MenuCamera() {
       <section>
         <h2 className="mb-3 setting-headline">Other settings.</h2>
 
-        <p className="-ml-2 flex items-center">
+        <p className="-ml-3 -mt-3 flex items-center">
           <label>
             <Checkbox
               size="small"
@@ -104,7 +92,7 @@ export function MenuCamera() {
               checked={Boolean(selectedCameraSettings?.mirrored)}
               onChange={(e) => setSelectedCameraSettings({ mirrored: e.target.checked })}
             />
-            <span>Mirrored</span>
+            <span className='-ml-1'>Mirrored</span>
           </label>
         </p>
       </section>

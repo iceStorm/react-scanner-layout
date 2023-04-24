@@ -12,7 +12,10 @@ const barcodeTypes = Object.values(BarcodeFormat).filter(
 ) as string[]
 
 export function MenuBarcodesPanel() {
-  const supportedBarcodeFormats = useCameraStore((state) => state.supportedBarcodeFormats)
+  const [supportedBarcodeFormats, addSupportedBarcodeFormat] = useCameraStore((state) => [
+    state.supportedBarcodeFormats,
+    state.toggleSupportedBarcodeFormat,
+  ])
 
   useEffect(() => {
     console.log('barcodeTypes:', barcodeTypes)
@@ -25,14 +28,10 @@ export function MenuBarcodesPanel() {
           return (
             <button
               key={type}
-              className={clsx(
-                'border border-stone-700 rounded-md',
-                'px-5 py-2 text-ellipsis line-clamp-1',
-                'hover:bg-stone-800',
-                {
-                  'bg-stone-700': supportedBarcodeFormats.includes(type),
-                },
-              )}
+              className={clsx('btn-toggle', {
+                active: supportedBarcodeFormats.includes(type),
+              })}
+              onClick={() => addSupportedBarcodeFormat(type)}
             >
               {type}
             </button>

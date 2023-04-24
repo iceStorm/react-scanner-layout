@@ -9,11 +9,11 @@ export const useCameraStore = create(
     immer<CameraState>((set) => ({
       cameraList: [],
       avalableResolutions: [
-        // {
-        //   name: 'HD',
-        //   width: 1280,
-        //   height: 720,
-        // },
+        {
+          name: 'HD',
+          width: 1280,
+          height: 720,
+        },
         {
           name: 'Full HD',
           width: 1920,
@@ -95,8 +95,14 @@ export const useCameraStore = create(
         })
       },
 
-      addSupportedBarcodeFormat(format) {
+      toggleSupportedBarcodeFormat(format) {
         set((state) => {
+          const oldIndex = state.supportedBarcodeFormats.findIndex((f) => f === format)
+          if (oldIndex !== -1) {
+            state.supportedBarcodeFormats.splice(oldIndex, 1)
+            return
+          }
+
           state.supportedBarcodeFormats.push(format)
         })
       },
@@ -105,6 +111,7 @@ export const useCameraStore = create(
       name: 'camera-store',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
+        supportedBarcodeFormats: state.supportedBarcodeFormats,
         selectedCamera: state.selectedCamera,
         selectedCameraSettings: {
           mirrored: state.selectedCameraSettings?.mirrored,

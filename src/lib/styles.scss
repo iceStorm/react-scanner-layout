@@ -397,4 +397,13 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 }
 
 #react-scanner-layout {
+  .btn-toggle {
+    @apply border border-stone-700 border-opacity-75 rounded-md;
+    @apply px-5 py-2 text-ellipsis line-clamp-1;
+    @apply hover:bg-stone-800;
+
+    &.active {
+      @apply bg-stone-700 hover:bg-opacity-75;
+    }
+  }
 }
