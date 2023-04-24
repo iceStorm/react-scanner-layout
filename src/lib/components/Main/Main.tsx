@@ -108,8 +108,9 @@ export function Main() {
             onUserMediaError={handleUserMediaError}
             mirrored={selectedCameraSettings?.mirrored}
             videoConstraints={{
-              aspectRatio: 1,
+              // aspectRatio: 1,
               facingMode: 'environment',
+              groupId: selectedCamera.groupId,
               deviceId: selectedCamera.deviceId,
               width: selectedCameraSettings?.width,
               height: selectedCameraSettings?.height,

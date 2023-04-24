@@ -28,6 +28,7 @@ import { Menu } from './Menu'
 import { Main } from './Main'
 import { AccessCameraLoader } from './AccessCameraLoader'
 import { PermissionDenied } from './PermissionDenied'
+import { MenuMasksPanel } from '@menu-items/MenuMasks'
 
 // extracting only functions from the menu
 export type ReactScannerLayoutRef = ConditionalPick<MenuState, (param: never) => void>
@@ -120,7 +121,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
         key: 'masks',
         title: 'Masks',
         icon: <CiBarcode size={20} />,
-        settingsPanel: <MenuBarcodesPanel />,
+        settingsPanel: <MenuMasksPanel />,
       })
 
       addMenuItem({
