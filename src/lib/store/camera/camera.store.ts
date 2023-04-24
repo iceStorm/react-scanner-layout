@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import { createJSONStorage, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { CameraState } from './camera.state'
 
@@ -9,11 +9,11 @@ export const useCameraStore = create(
     immer<CameraState>((set) => ({
       cameraList: [],
       avalableResolutions: [
-        {
-          name: 'HD',
-          width: 1280,
-          height: 720,
-        },
+        // {
+        //   name: 'HD',
+        //   width: 1280,
+        //   height: 720,
+        // },
         {
           name: 'Full HD',
           width: 1920,
@@ -30,6 +30,8 @@ export const useCameraStore = create(
           height: 2160,
         },
       ],
+
+      supportedBarcodeFormats: ['CODE_128', 'QR_CODE'],
 
       isAccessingCamera: true,
       isCameraPermissionDenied: false,
@@ -84,10 +86,18 @@ export const useCameraStore = create(
 
       addResolution(res) {
         set((state) => {
-          if (!state.avalableResolutions.some((res) => res.name === res.name)) {
+          console.log('addResolution:', res, state)
+
+          if (!state.avalableResolutions.some((r) => r.name === res.name)) {
             console.log(state.avalableResolutions, res)
-            state.avalableResolutions.push(res)
+            state.avalableResolutions.unshift(res)
           }
+        })
+      },
+
+      addSupportedBarcodeFormat(format) {
+        set((state) => {
+          state.supportedBarcodeFormats.push(format)
         })
       },
     })),

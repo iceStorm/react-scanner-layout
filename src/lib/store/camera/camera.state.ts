@@ -1,13 +1,3 @@
-export type CameraResolution = {
-  name: string
-  width: number
-  height: number
-}
-
-export type CameraSettings = MediaTrackSettings & {
-  mirrored?: boolean
-}
-
 export interface CameraState {
   isAccessingCamera: boolean
   isCameraPaused: boolean
@@ -19,6 +9,7 @@ export interface CameraState {
   cameraList: MediaDeviceInfo[]
 
   avalableResolutions: CameraResolution[]
+  supportedBarcodeFormats: string[]
 
   setCameraList(cameraList: MediaDeviceInfo[]): void
   setCameraVisibility(visible: boolean): void
@@ -27,4 +18,15 @@ export interface CameraState {
 
   finishAccessingCamera(granted: boolean): void
   addResolution(res: CameraResolution): void
+  addSupportedBarcodeFormat(format: string): void
+}
+
+export type CameraResolution = {
+  name: string
+  width: number
+  height: number
+}
+
+export type CameraSettings = MediaTrackSettings & {
+  mirrored?: boolean
 }

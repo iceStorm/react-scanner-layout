@@ -5,10 +5,11 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import clsx from 'clsx'
 import { ConditionalPick } from 'type-fest'
 import { motion, AnimatePresence } from 'framer-motion'
+import { shallow } from 'zustand/shallow'
 
+import { CiBarcode } from 'react-icons/ci'
 import { RiBarcodeLine } from 'react-icons/ri'
 import { IoMusicalNote, IoVideocam } from 'react-icons/io5'
-import { CiBarcode } from 'react-icons/ci'
 
 import { useMenuStore, MenuState } from '@store/menu'
 import { useCameraStore } from '@store/camera'
@@ -27,7 +28,6 @@ import { Menu } from './Menu'
 import { Main } from './Main'
 import { AccessCameraLoader } from './AccessCameraLoader'
 import { PermissionDenied } from './PermissionDenied'
-import { shallow } from 'zustand/shallow'
 
 // extracting only functions from the menu
 export type ReactScannerLayoutRef = ConditionalPick<MenuState, (param: never) => void>
@@ -148,19 +148,12 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
         console.log('Camera settings:', cameraSettings)
 
         finishAccessingCamera(true)
-        setCameraList(
-          cameraList,
-          // .concat(cameraList)
-          // .concat(cameraList)
-          // .concat(cameraList)
-          // .concat(cameraList)
-          // .concat(cameraList),
-        )
+        setCameraList(cameraList)
         setSelectedCamera(cameraList[0])
         setSelectedCameraSettings(cameraSettings)
 
         addResolution({
-          name: 'default',
+          name: 'Default',
           width: cameraSettings.width || 0,
           height: cameraSettings.height || 0,
         })
