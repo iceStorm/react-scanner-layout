@@ -2,7 +2,7 @@ export interface CameraState {
   isAccessingCamera: boolean
   isCameraPaused: boolean
   isCameraPermissionDenied: boolean
-  isCameraPermissionGranted: boolean
+  isCameraNotFound: boolean
 
   selectedCamera?: MediaDeviceInfo
   selectedCameraSettings?: CameraSettings
@@ -16,7 +16,7 @@ export interface CameraState {
   setSelectedCamera(camera?: MediaDeviceInfo): void
   setSelectedCameraSettings(settings: CameraSettings): void
 
-  finishAccessingCamera(granted: boolean): void
+  finishAccessingCamera(granted: boolean | null | undefined): void
   addResolution(res: CameraResolution): void
   toggleSupportedBarcodeFormat(format: string): void
 }

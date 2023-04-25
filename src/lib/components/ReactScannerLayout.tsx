@@ -29,6 +29,7 @@ import { Main } from './Main'
 import { AccessCameraLoader } from './AccessCameraLoader'
 import { PermissionDenied } from './PermissionDenied'
 import { MenuMasksPanel } from '@menu-items/MenuMasks'
+import { CameraNotFound } from './CameraNotFound/CameraNotFound'
 
 // extracting only functions from the menu
 export type ReactScannerLayoutRef = ConditionalPick<MenuState, (param: never) => void>
@@ -39,16 +40,19 @@ export interface ReactScannerLayoutProps {
 
   /** Component to show when user denied camera persmisson. */
   permissionDeniedComponent?: JSX.Element
+
+  /** Component to show when not found any active camera. */
+  cameraNotFoundComponent?: JSX.Element
 }
 
 export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScannerLayoutProps>(
   function ReactScannerLayout(props, ref) {
-    const { loaderComponent, permissionDeniedComponent } = props
+    const { loaderComponent, permissionDeniedComponent, cameraNotFoundComponent } = props
 
     const [
       isAccessingCamera,
       isCameraPermissionDenied,
-      isCameraPermissionGranted,
+      isCameraNotFound,
       finishAccessingCamera,
       setCameraList,
       setSelectedCamera,
@@ -58,7 +62,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
       (state) => [
         state.isAccessingCamera,
         state.isCameraPermissionDenied,
-        state.isCameraPermissionGranted,
+        state.isCameraNotFound,
         state.finishAccessingCamera,
         state.setCameraList,
         state.setSelectedCamera,
@@ -160,7 +164,21 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
         })
       } catch (error) {
         console.error('Error when accessing camera:', error)
-        finishAccessingCamera(false)
+
+        if (error instanceof Error) {
+          switch (error.message) {
+            case 'Requested device not found':
+              finishAccessingCamera(undefined)
+              break
+
+            case 'Permission denied':
+              finishAccessingCamera(null)
+              break
+
+            default:
+              finishAccessingCamera(false)
+          }
+        }
       }
     }
 
@@ -182,7 +200,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
               )}
             </AnimatePresence>
 
-            {isCameraPermissionDenied && (
+            {!isAccessingCamera && isCameraPermissionDenied && (
               <motion.div
                 transition={{ duration: 0.5 }}
                 initial={{ opacity: 0 }}
@@ -193,7 +211,18 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
               </motion.div>
             )}
 
-            {isCameraPermissionGranted && (
+            {!isAccessingCamera && isCameraNotFound && (
+              <motion.div
+                transition={{ duration: 0.5 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="h-full"
+              >
+                {cameraNotFoundComponent ?? <CameraNotFound />}
+              </motion.div>
+            )}
+
+            {!isAccessingCamera && !isCameraNotFound && !isCameraPermissionDenied && (
               <>
                 <Menu />
                 <Main />

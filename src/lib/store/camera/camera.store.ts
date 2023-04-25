@@ -35,14 +35,14 @@ export const useCameraStore = create(
 
       isAccessingCamera: true,
       isCameraPermissionDenied: false,
-      isCameraPermissionGranted: false,
       isCameraPaused: false,
+      isCameraNotFound: false,
 
       finishAccessingCamera(granted) {
         set(() => ({
           isAccessingCamera: false,
-          isCameraPermissionGranted: granted,
-          isCameraPermissionDenied: !granted,
+          isCameraPermissionDenied: granted === null,
+          isCameraNotFound: granted === undefined,
         }))
       },
 

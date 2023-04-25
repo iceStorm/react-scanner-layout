@@ -110,7 +110,6 @@ export function Main() {
             videoConstraints={{
               // aspectRatio: 1,
               facingMode: 'environment',
-              groupId: selectedCamera.groupId,
               deviceId: selectedCamera.deviceId,
               width: selectedCameraSettings?.width,
               height: selectedCameraSettings?.height,
