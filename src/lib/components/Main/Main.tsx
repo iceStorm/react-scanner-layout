@@ -81,7 +81,25 @@ export function Main() {
   }
 
   function handleUserMediaError(error: DOMException | string) {
-    console.log(error)
+    console.log('handleUserMediaError:', error)
+
+    if (error instanceof Error) {
+      switch (error.message) {
+        case 'Requested device not found':
+          finishAccessingCamera(undefined)
+          break
+
+        case 'Permission denied':
+          finishAccessingCamera(null)
+          break
+
+        default:
+          finishAccessingCamera(false)
+      }
+
+      return
+    }
+
     finishAccessingCamera(false)
   }
 

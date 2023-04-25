@@ -163,7 +163,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
           height: cameraSettings.height || 0,
         })
       } catch (error) {
-        console.error('Error when accessing camera:', error)
+        console.error('requestCameraPermission:', error)
 
         if (error instanceof Error) {
           switch (error.message) {
@@ -178,7 +178,11 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
             default:
               finishAccessingCamera(false)
           }
+
+          return
         }
+
+        finishAccessingCamera(false)
       }
     }
 
