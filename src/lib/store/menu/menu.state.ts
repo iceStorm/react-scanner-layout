@@ -20,7 +20,7 @@ export interface MenuState {
   position: MenuPosition
 
   setPosition(position: MenuPosition): void
-  setMenuVisibility(visible: boolean): void
+  toggleMenuVisibility(): void
   addMenuItem(item: MenuItem): void
   removeMenuItemAt(index: number): void
 

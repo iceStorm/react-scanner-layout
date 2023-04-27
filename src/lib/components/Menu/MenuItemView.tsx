@@ -27,7 +27,7 @@ export function MenuItemView(props: HeaderItemViewProps) {
         'flex flex-col items-center',
         'transition-all duration-100 hover:bg-stone-800',
         {
-          'bg-stone-700 bg-opacity-80': isActive && settingsPanel,
+          'bg-stone-700 bg-opacity-50': isActive && settingsPanel,
         },
       )}
       style={{ minWidth: '85px' }}

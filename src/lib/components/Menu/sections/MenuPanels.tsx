@@ -50,7 +50,6 @@ export function MenuPanels({ headerHeight }: MenuPanelsProps) {
                 hidden: !i.isActive,
               },
             )}
-            style={{ maxHeight: maxHeight }}
           >
             <header className={clsx('px-5 py-3 border-b border-stone-800', 'font-bold')}>
               {i.title} settings.

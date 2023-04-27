@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
 import { MenuState } from './menu.state'
+import { log } from '@utils/logger.utils'
 
 export const useMenuStore = create(
   immer<MenuState>((set) => ({
@@ -15,17 +16,17 @@ export const useMenuStore = create(
       })
     },
 
-    setMenuVisibility(visible) {
+    toggleMenuVisibility() {
       set((state) => {
-        state.isVisible = visible
-
-        if (!visible) {
-          state.items
-            .filter((i) => Boolean(i.settingsPanel))
-            .forEach((i) => {
-              i.isActive = false
-            })
+        if (state.isVisible) {
+          for (const [index, item] of state.items.entries()) {
+            if (item.settingsPanel) {
+              state.items[index].isActive = false
+            }
+          }
         }
+
+        state.isVisible = !state.isVisible
       })
     },
 
@@ -33,10 +34,9 @@ export const useMenuStore = create(
       set((state) => {
         const previousIndex = state.items.findIndex((i) => i.key === newItem.key)
         if (previousIndex !== -1) {
-          console.warn(
-            `The menu is already contain an item with key "${newItem.key}".
-          Replaced by the old one by the new one.`.trim(),
-          )
+          // log(
+          //   `The menu is already contain an item with key "${newItem.key}". Replaced by the old one by the new one.`.trim(),
+          // )
 
           state.items.splice(previousIndex, 1, newItem)
           return
@@ -54,12 +54,10 @@ export const useMenuStore = create(
 
     setActiveItem(key) {
       set((state) => {
-        // console.log('key:', key)
-
         const itemIndex = state.items.findIndex((i) => i.key === key)
         if (itemIndex === -1) {
-          console.warn(`setActiveItem: There are no menu items with key "${key}".`)
-          return {}
+          log(`setActiveItem: There are no menu items with key "${key}".`)
+          return
         }
 
         // close other panels
@@ -74,16 +72,11 @@ export const useMenuStore = create(
 
     hideActiveMenuPanel() {
       return set((state) => {
-        const activeMenuPanels = state.items.some((i) => Boolean(i.settingsPanel) && i.isActive)
-
-        if (activeMenuPanels) {
-          console.log('hideActiveMenuPanel...')
-          state.items.forEach((item) => {
-            if (item.settingsPanel) {
-              item.isActive = false
-            }
-          })
-        }
+        state.items.forEach((item) => {
+          if (item.settingsPanel && item.isActive) {
+            item.isActive = false
+          }
+        })
       })
     },
   })),

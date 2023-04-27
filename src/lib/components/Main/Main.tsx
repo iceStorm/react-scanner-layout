@@ -2,36 +2,23 @@ import { useEffect, useRef } from 'react'
 import { shallow } from 'zustand/shallow'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import Webcam from 'react-webcam'
 import { clsx } from 'clsx'
 
 import { useCameraStore } from '@store/camera'
 import { useMenuStore } from '@store/menu'
 
-import { getStreamSettings } from '@utils/camera.utils'
+import { log } from '@utils/logger.utils'
 
 export function Main() {
-  const [
-    isCameraPaused,
-    selectedCamera,
-    selectedCameraSettings,
-    finishAccessingCamera,
-    setSelectedCameraSettings,
-  ] = useCameraStore(
-    (state) => [
-      state.isCameraPaused,
-      state.selectedCamera,
-      state.selectedCameraSettings,
-      state.finishAccessingCamera,
-      state.setSelectedCameraSettings,
-    ],
+  const [isCameraPaused, selectedCamera] = useCameraStore(
+    (state) => [state.isCameraPaused, state.selectedCamera, state.finishAccessingCamera],
     shallow,
   )
 
-  const [hideActiveMenuPanel] = useMenuStore((state) => [state.hideActiveMenuPanel])
+  const [hideActiveMenuPanel] = useMenuStore((state) => [state.hideActiveMenuPanel], shallow)
 
-  const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     window.addEventListener('resize', handleWindowResize)
@@ -48,6 +35,32 @@ export function Main() {
     }
   }, [])
 
+  useEffect(() => {
+    if (videoRef?.current) {
+      if (selectedCamera?.stream) {
+        videoRef.current.srcObject = selectedCamera.stream
+        videoRef.current
+          .play()
+          .then(() => {
+            log(
+              '[Main.tsx] videoRef.play() success',
+              videoRef.current?.videoWidth,
+              videoRef.current?.videoHeight,
+            )
+          })
+          .catch((err) => {
+            console.error('[Main.tsx] videoRef.play() exception:', err)
+          })
+      } else {
+        videoRef.current.pause()
+      }
+    }
+
+    return () => {
+      // videoRef.current?.pause()
+    }
+  }, [selectedCamera?.stream])
+
   function handleWindowResize() {
     if (canvasRef.current) {
       canvasRef.current.width = window.innerWidth
@@ -57,55 +70,9 @@ export function Main() {
 
   console.log('Main renders...')
 
-  function handleUserMedia(stream: MediaStream) {
-    const settings = getStreamSettings(stream)
-
-    console.log('Actual Width: ' + settings.width + 'px')
-    console.log('Actual Height: ' + settings.height + 'px')
-    // console.log('Picked Width: ' + selectedCameraSettings?.width + 'px')
-    // console.log('Picked Height: ' + selectedCameraSettings?.height + 'px')
-
-    if (
-      selectedCameraSettings?.width &&
-      selectedCameraSettings?.height &&
-      settings.width &&
-      settings.height
-    ) {
-      if (
-        settings.width !== selectedCameraSettings.width ||
-        settings.height !== selectedCameraSettings.height
-      ) {
-        setSelectedCameraSettings(settings)
-      }
-    }
-  }
-
-  function handleUserMediaError(error: DOMException | string) {
-    console.log('handleUserMediaError:', error)
-
-    if (error instanceof Error) {
-      switch (error.message) {
-        case 'Requested device not found':
-          finishAccessingCamera(undefined)
-          break
-
-        case 'Permission denied':
-          finishAccessingCamera(null)
-          break
-
-        default:
-          finishAccessingCamera(false)
-      }
-
-      return
-    }
-
-    finishAccessingCamera(false)
-  }
-
   return (
     <AnimatePresence>
-      {!isCameraPaused && selectedCamera && (
+      {!isCameraPaused && selectedCamera && selectedCamera.stream && (
         <motion.main
           transition={{ duration: 1 }}
           initial={{ opacity: 0 }}
@@ -115,24 +82,15 @@ export function Main() {
           onClick={() => hideActiveMenuPanel()}
         >
           <canvas ref={canvasRef} className={clsx('absolute inset-0')} />
-
-          <Webcam
-            id="video"
-            ref={webcamRef}
-            className="w-full h-screen object-cover"
-            screenshotFormat="image/jpeg"
-            forceScreenshotSourceSize
-            onUserMedia={handleUserMedia}
-            onUserMediaError={handleUserMediaError}
-            mirrored={selectedCameraSettings?.mirrored}
-            videoConstraints={{
-              // aspectRatio: 1,
-              facingMode: 'environment',
-              deviceId: selectedCamera.deviceId,
-              width: selectedCameraSettings?.width,
-              height: selectedCameraSettings?.height,
-            }}
-          />
+          <video
+            ref={videoRef}
+            playsInline
+            className={clsx('w-full h-screen object-cover', {
+              '-scale-x-100': selectedCamera?.mirrored,
+            })}
+          >
+            <h1>Video stream from Camera not started.</h1>
+          </video>
         </motion.main>
       )}
     </AnimatePresence>

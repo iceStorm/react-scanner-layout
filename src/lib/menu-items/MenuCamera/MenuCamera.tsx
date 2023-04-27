@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
+import { useMemo } from 'react'
 
 import clsx from 'clsx'
 import { shallow } from 'zustand/shallow'
-import Checkbox from '@mui/material/Checkbox'
+import { Switch } from '@headlessui/react'
 
 import { useCameraStore } from '@store/camera'
 
@@ -10,30 +10,34 @@ import styles from './MenuCamera.module.scss'
 
 export function MenuCamera() {
   const [
+    isCameraPaused,
     cameraList,
     selectedCamera,
-    selectedCameraSettings,
     avalableResolutions,
-    setSelectedCamera,
     setSelectedCameraSettings,
+    requestCamera,
   ] = useCameraStore(
     (state) => [
+      state.isCameraPaused,
       state.cameraList,
       state.selectedCamera,
-      state.selectedCameraSettings,
       state.avalableResolutions,
-      state.setSelectedCamera,
       state.setSelectedCameraSettings,
+      state.requestCamera,
     ],
     shallow,
   )
 
-  useEffect(() => {
-    //
-  }, [])
+  const selectedCameraInfo = useMemo(() => {
+    return cameraList.find((c) => c.deviceId === selectedCamera?.deviceId)
+  }, [selectedCamera, cameraList])
 
   return (
-    <div className={clsx('flex flex-col gap-10')}>
+    <div
+      className={clsx('flex flex-col gap-10', {
+        'pointer-events-none text-gray-700': isCameraPaused,
+      })}
+    >
       <section>
         <h2 className="mb-3">Pick a camera from your device</h2>
 
@@ -44,8 +48,12 @@ export function MenuCamera() {
                 key={camera.deviceId}
                 className={clsx('btn-toggle', {
                   active: camera.deviceId === selectedCamera?.deviceId,
+                  'text-gray-500': isCameraPaused,
                 })}
-                onClick={() => setSelectedCamera(camera)}
+                onClick={() => {
+                  console.log('Selected camera:', camera)
+                  requestCamera({ video: { deviceId: camera.deviceId } })
+                }}
               >
                 {camera.label}
               </button>
@@ -56,7 +64,7 @@ export function MenuCamera() {
 
       <section>
         <h2 className="mb-3">
-          Select a resolution for the selected camera "{selectedCamera?.label}"
+          Select a resolution for the selected camera "{selectedCameraInfo?.label}"
         </h2>
 
         <div className={styles.resolutionGrid}>
@@ -66,10 +74,14 @@ export function MenuCamera() {
                 key={name}
                 className={clsx('btn-toggle', {
                   active:
-                    selectedCameraSettings?.width === width &&
-                    selectedCameraSettings?.height === height,
+                    (selectedCamera?.width === width && selectedCamera?.height === height) ||
+                    (selectedCamera?.width === height && selectedCamera?.height === width),
+                  'text-gray-500': isCameraPaused,
                 })}
-                onClick={() => setSelectedCameraSettings({ width, height })}
+                onClick={(e) => {
+                  requestCamera({ video: { width, height } })
+                  e.currentTarget.blur()
+                }}
               >
                 <p className="mb-1">{name}</p>
                 <p>
@@ -82,19 +94,32 @@ export function MenuCamera() {
       </section>
 
       <section>
-        <h2 className="mb-3 setting-headline">Other settings.</h2>
+        <h2 className="mb-5 setting-headline">Other settings.</h2>
 
-        <p className="-ml-3 -mt-3 flex items-center">
-          <label>
-            <Checkbox
-              size="small"
-              color="primary"
-              checked={Boolean(selectedCameraSettings?.mirrored)}
-              onChange={(e) => setSelectedCameraSettings({ mirrored: e.target.checked })}
-            />
-            <span className='-ml-1'>Mirrored</span>
+        <div className="flex items-center">
+          <label className="flex items-center gap-2">
+            <Switch
+              checked={!!selectedCamera?.mirrored}
+              onChange={(checked) => setSelectedCameraSettings({ mirrored: checked })}
+              className={`${
+                selectedCamera?.mirrored
+                  ? isCameraPaused
+                    ? 'bg-blue-900'
+                    : 'bg-blue-500'
+                  : 'bg-stone-500'
+              } relative inline-flex h-6 w-11 items-center rounded-full`}
+            >
+              <span className="sr-only">Mirrored</span>
+              <span
+                className={`${
+                  selectedCamera?.mirrored ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+
+            <span className="cursor-pointer">Mirrored</span>
           </label>
-        </p>
+        </div>
       </section>
     </div>
   )

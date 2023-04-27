@@ -10,15 +10,16 @@ import { useMenuStore } from '@store/menu'
 import { useCameraStore } from '@store/camera'
 
 export const MenuControls = forwardRef<HTMLDivElement>(function (_props, ref) {
-  const [setMenuVisibility, menuPosition, isMenuVisible] = useMenuStore((state) => [
-    state.setMenuVisibility,
+  const [toggleMenuVisibility, menuPosition, isMenuVisible] = useMenuStore((state) => [
+    state.toggleMenuVisibility,
     state.position,
     state.isVisible,
   ])
 
-  const [isCameraPaused, setCameraVisibility] = useCameraStore((state) => [
+  const [isCameraPaused, toggleCameraVisibility] = useCameraStore((state) => [
     state.isCameraPaused,
-    state.setCameraVisibility,
+    state.toggleCameraVisibility,
+    state.requestCamera,
   ])
 
   const MenuIcon = useMemo(() => {
@@ -49,7 +50,7 @@ export const MenuControls = forwardRef<HTMLDivElement>(function (_props, ref) {
           'bg-stone-900 rounded-md hover:bg-stone-700',
           'border border-stone-700',
         )}
-        onClick={() => setMenuVisibility(!isMenuVisible)}
+        onClick={() => toggleMenuVisibility()}
       >
         <MenuIcon size={15} />
         <span>{isMenuVisible ? 'Hide' : 'Menu'}</span>
@@ -63,7 +64,7 @@ export const MenuControls = forwardRef<HTMLDivElement>(function (_props, ref) {
           'bg-stone-900 rounded-md hover:bg-stone-700',
           'border border-stone-700',
         )}
-        onClick={() => setCameraVisibility(!isCameraPaused)}
+        onClick={() => toggleCameraVisibility()}
       >
         <PauseResumeIcon size={15} />
         <span>{isCameraPaused ? 'Resume' : 'Pause'}</span>
