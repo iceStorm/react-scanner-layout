@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 
 import clsx from 'clsx'
 import { ConditionalPick } from 'type-fest'
@@ -16,20 +16,28 @@ import { MenuBarcodesPanel } from '@menu-items/MenuBarcodes'
 import { MenuCamera } from '@menu-items/MenuCamera'
 import { MenuMasksPanel } from '@menu-items/MenuMasks'
 
+import { ScreenShotProps } from '@models/ScreenShot'
+import { captureImageFromVideo } from '@utils/canvas.utilts'
+
 import '../../styles.scss'
 
 import pip from '@assets/store-scanner-beep.mp3'
 const pipAudio = new Audio(pip)
 
 import { Menu } from '../Menu'
-import { Main } from '../Main'
+import { Main, MainRef } from '../Main'
 
 import { AccessCameraLoader } from '../AccessCameraLoader'
 import { PermissionDenied } from '../PermissionDenied'
 import { CameraNotFound } from '../CameraNotFound'
 
 // extracting only functions from the menu
-export type ReactScannerLayoutRef = ConditionalPick<MenuState, (param: never) => void>
+export type ReactScannerLayoutRef = ConditionalPick<MenuState, (param: never) => void> & {
+  captureScreenShot(specs?: ScreenShotProps): {
+    toImageData(): ImageData | undefined
+    toBase64(): string | undefined
+  }
+}
 
 export interface ReactScannerLayoutProps {
   /** Component to show when accessing camera. */
@@ -43,19 +51,25 @@ export interface ReactScannerLayoutProps {
 }
 
 export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScannerLayoutProps>(
-  function ReactScannerLayout(props, ref) {
+  function (props, ref) {
     const { loaderComponent, permissionDeniedComponent, cameraNotFoundComponent } = props
 
-    const [isAccessingCamera, isCameraPermissionDenied, isCameraNotFound, requestCamera] =
-      useCameraStore(
-        (state) => [
-          state.isAccessingCamera,
-          state.isCameraPermissionDenied,
-          state.isCameraNotFound,
-          state.requestCamera,
-        ],
-        shallow,
-      )
+    const [
+      selectedCamera,
+      isAccessingCamera,
+      isCameraPermissionDenied,
+      isCameraNotFound,
+      requestCamera,
+    ] = useCameraStore(
+      (state) => [
+        state.selectedCamera,
+        state.isAccessingCamera,
+        state.isCameraPermissionDenied,
+        state.isCameraNotFound,
+        state.requestCamera,
+      ],
+      shallow,
+    )
 
     const [
       addMenuItem,
@@ -84,7 +98,23 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
       setPosition,
       setActiveItem,
       hideActiveMenuPanel,
+      captureScreenShot() {
+        return {
+          toImageData() {
+            if (mainRef.current?.videoRef.current && selectedCamera?.stream) {
+              return captureImageFromVideo(mainRef.current?.videoRef.current).toImageData()
+            }
+          },
+          toBase64() {
+            if (mainRef.current?.videoRef.current && selectedCamera?.stream) {
+              return captureImageFromVideo(mainRef.current?.videoRef.current).toBase64()
+            }
+          },
+        }
+      },
     }))
+
+    const mainRef = useRef<MainRef>(null)
 
     useEffect(() => {
       addDefaultMenuItems()
@@ -170,7 +200,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
           {!isAccessingCamera && !isCameraPermissionDenied && !isCameraNotFound && (
             <>
               <Menu />
-              <Main />
+              <Main ref={mainRef} />
             </>
           )}
         </div>

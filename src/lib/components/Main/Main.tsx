@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { RefObject, forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import { shallow } from 'zustand/shallow'
 
 import { AnimatePresence, motion } from 'framer-motion'
@@ -9,7 +9,12 @@ import { useMenuStore } from '@store/menu'
 
 import { log } from '@utils/logger.utils'
 
-export function Main() {
+export interface MainRef {
+  videoRef: RefObject<HTMLVideoElement>
+  canvasRef: RefObject<HTMLCanvasElement>
+}
+
+export const Main = forwardRef<MainRef>(function (_props, ref) {
   const [isCameraPaused, selectedCamera] = useCameraStore(
     (state) => [state.isCameraPaused, state.selectedCamera, state.finishAccessingCamera],
     shallow,
@@ -19,6 +24,11 @@ export function Main() {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+
+  useImperativeHandle(ref, () => ({
+    videoRef,
+    canvasRef,
+  }))
 
   useEffect(() => {
     window.addEventListener('resize', handleWindowResize)
@@ -95,4 +105,4 @@ export function Main() {
       )}
     </AnimatePresence>
   )
-}
+})

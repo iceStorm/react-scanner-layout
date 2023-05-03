@@ -730,6 +730,11 @@
     "@typescript-eslint/types" "5.59.2"
     eslint-visitor-keys "^3.3.0"
 
+"@undecaf/zbar-wasm@0.9.13":
+  version "0.9.13"
+  resolved "https://registry.yarnpkg.com/@undecaf/zbar-wasm/-/zbar-wasm-0.9.13.tgz#dc17280770a8d075205c32dd4d1ce95faec0546f"
+  integrity sha512-Xl4eyfU8nwtTHF4Wi0Qyklq8BC6BmW++GYlN0gCeIgrqeIDmV7xp3nNpIN4fQpIbdvq3lvgnvVcBKAiYn9FvzA==
+
 "@vitejs/plugin-basic-ssl@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-basic-ssl/-/plugin-basic-ssl-1.0.1.tgz#48c46eab21e0730921986ce742563ae83fe7fe34"
@@ -2521,6 +2526,11 @@ react-refresh@^0.14.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"
   integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
 
+react-simple-toasts@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/react-simple-toasts/-/react-simple-toasts-3.6.0.tgz#5d3df8a924be19fdff79e224ed515400b1261ca8"
+  integrity sha512-zslljHteMXvHutZ7ZKBXMxyn6GbZA2W902kxNY329tIvE8t9VHX0PeacURB5oFwjr0/p9ZfWE6TLDE6W9Lao/Q==
+
 react-webcam@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/react-webcam/-/react-webcam-7.0.1.tgz#8249e1d621eb4bba7e3f52135f562439d0528df3"
@@ -2990,6 +3000,11 @@ vite-plugin-static-copy@^0.14.0:
     fast-glob "^3.2.11"
     fs-extra "^11.1.0"
     picocolors "^1.0.0"
+
+vite-plugin-wasm@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-wasm/-/vite-plugin-wasm-3.2.2.tgz#7a66fef27733a0dea9b2b14f942a6389a2523f7c"
+  integrity sha512-cdbBUNR850AEoMd5nvLmnyeq63CSfoP1ctD/L2vLk/5+wsgAPlAVAzUK5nGKWO/jtehNlrSSHLteN+gFQw7VOA==
 
 vite-tsconfig-paths@^4.2.0:
   version "4.2.0"

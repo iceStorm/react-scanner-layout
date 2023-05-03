@@ -23,6 +23,7 @@
     "baseUrl": ".",
     "paths": {
       "@assets/*": ["./src/lib/assets/*"],
+      "@models/*": ["./src/lib/models/*"],
       "@utils/*": ["./src/lib/utils/*"],
       "@components/*": ["./src/lib/components/*"],
       "@store/*": ["./src/lib/store/*"],
