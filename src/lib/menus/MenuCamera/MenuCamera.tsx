@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { shallow } from 'zustand/shallow'
 import { Switch } from '@headlessui/react'
 
-import { useCameraStore } from '@store/camera'
+import { useCameraStore } from '~store/camera'
 
 import styles from './MenuCamera.module.scss'
 

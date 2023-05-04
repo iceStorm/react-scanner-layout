@@ -4,10 +4,10 @@ import { shallow } from 'zustand/shallow'
 import { AnimatePresence, motion } from 'framer-motion'
 import { clsx } from 'clsx'
 
-import { useCameraStore } from '@store/camera'
-import { useMenuStore } from '@store/menu'
+import { useCameraStore } from '~store/camera'
+import { useMenuStore } from '~store/menu'
 
-import { log } from '@utils/logger.utils'
+import { log } from '~utils/logger.utils'
 
 export interface MainRef {
   videoRef: RefObject<HTMLVideoElement>

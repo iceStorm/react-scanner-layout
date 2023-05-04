@@ -4,7 +4,6 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -13,24 +12,29 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "allowJs": true,
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
     "baseUrl": ".",
     "paths": {
-      "@assets/*": ["./src/lib/assets/*"],
-      "@models/*": ["./src/lib/models/*"],
-      "@utils/*": ["./src/lib/utils/*"],
-      "@components/*": ["./src/lib/components/*"],
-      "@store/*": ["./src/lib/store/*"],
-      "@menus/*": ["src/lib/menus/*"],
-      "@tailwindcss": ["./tailwind.config.js"]
+      "~assets/*": ["./src/lib/assets/*"],
+      "~models/*": ["./src/lib/models/*"],
+      "~utils/*": ["./src/lib/utils/*"],
+      "~components/*": ["./src/lib/components/*"],
+      "~store/*": ["./src/lib/store/*"],
+      "~menus/*": ["src/lib/menus/*"],
+      "~tailwindcss": ["./tailwind.config.js"],
+      "~demo/*": ["src/demo/*"],
+      "~lib/*": ["src/lib/*"],
+      "~/*": ["src/lib/*"]
     }
   },
   "include": ["src/lib", "src/demo"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

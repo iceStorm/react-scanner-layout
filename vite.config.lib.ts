@@ -1,13 +1,12 @@
 import { join, resolve } from 'path'
+import { readFileSync, writeFileSync } from 'fs'
+import { fileURLToPath, URL } from 'url'
 
 import { defineConfig } from 'vite'
 
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
-import tsconfigPaths from 'vite-tsconfig-paths'
-import cssInjection from 'vite-plugin-css-injected-by-js'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
-import { readFileSync, writeFileSync } from 'fs'
 
 if (process.env.PUBLISH) {
   const packageJsonFile = JSON.parse(
@@ -50,14 +49,14 @@ if (process.env.PUBLISH) {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    tsconfigPaths(),
     react(),
     dts({
       entryRoot: 'src/lib',
       tsConfigFilePath: join(__dirname, 'tsconfig.json'),
       skipDiagnostics: true,
       insertTypesEntry: true,
-      // include: ['src/lib/index.ts', 'src/lib/menu-items/index.ts'],
+      // include: ['src/lib/components/**/*.{ts,tsx}', 'src/lib/menus/**/*.{ts,tsx}'],
+      // exclude: ['./src/lib/store/**/*.{ts,tsx}'],
     }),
     // cssInjection(),
     viteStaticCopy({
@@ -65,7 +64,7 @@ export default defineConfig({
         {
           src: './package.json',
           dest: '.',
-          transform: (content, _filename) => {
+          transform: (content) => {
             const json = JSON.parse(content)
             delete json['scripts']
             delete json['devDependencies']
@@ -83,7 +82,7 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: {
-        index: './src/lib/index.ts',
+        index: './src/lib/components/ReactScannerLayout/index.ts',
         menu: './src/lib/menus/index.ts',
       },
       // Change this to the formats you want to support.
@@ -110,5 +109,34 @@ export default defineConfig({
         // preserveModules: true,
       },
     },
+  },
+
+  resolve: {
+    alias: [
+      {
+        find: '~',
+        replacement: fileURLToPath(new URL('./src/lib', import.meta.url)),
+      },
+      {
+        find: '~store',
+        replacement: fileURLToPath(new URL('./src/lib/store', import.meta.url)),
+      },
+      {
+        find: '~utils',
+        replacement: fileURLToPath(new URL('./src/lib/utils', import.meta.url)),
+      },
+      {
+        find: '~menus',
+        replacement: fileURLToPath(new URL('./src/lib/menus', import.meta.url)),
+      },
+      {
+        find: '~models',
+        replacement: fileURLToPath(new URL('./src/lib/models', import.meta.url)),
+      },
+      {
+        find: '~assets',
+        replacement: fileURLToPath(new URL('./src/lib/assets', import.meta.url)),
+      },
+    ],
   },
 })

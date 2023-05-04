@@ -1,4 +1,4 @@
-import { useConfigStore } from '@store/config/config.store'
+import { useConfigStore } from '~store/config/config.store'
 
 export function log(...message: unknown[]) {
   const useLogs = useConfigStore.getState().useLogs

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import clsx from 'clsx'
 
-import { useMenuStore } from '@store/menu'
+import { useMenuStore } from '~store/menu'
 
 export interface MenuPanelsProps {
   headerHeight?: number

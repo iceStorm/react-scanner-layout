@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { RxTriangleDown } from 'react-icons/rx'
 
-import { MenuItem, useMenuStore } from '@store/menu'
+import { MenuItem, useMenuStore } from '~store/menu'
 
 interface HeaderItemViewProps {
   item: MenuItem

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-import { log } from '@utils/logger.utils'
+import { log } from '~utils/logger.utils'
 
 import { MenuState } from './menu.state'
 

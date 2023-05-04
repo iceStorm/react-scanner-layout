@@ -2,9 +2,9 @@ import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { getCameraList, getCameraStream } from '@utils/camera.utils'
-import { log } from '@utils/logger.utils'
-import { sleep } from '@utils/async.utils'
+import { getCameraList, getCameraStream } from '~utils/camera.utils'
+import { log } from '~utils/logger.utils'
+import { sleep } from '~utils/async.utils'
 
 import { CameraState } from './camera.state'
 

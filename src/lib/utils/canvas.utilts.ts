@@ -1,4 +1,4 @@
-import { ScreenShotProps } from '@models/ScreenShot'
+import { ScreenShotProps } from '~models/ScreenShot'
 
 function _captureImageFromVideoFactory() {
   const canvas = document.createElement('canvas')

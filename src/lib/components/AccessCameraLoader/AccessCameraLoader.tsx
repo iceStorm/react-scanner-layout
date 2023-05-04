@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 
-import spinnerIcon from '@assets/green-spinner.png'
+import spinnerIcon from '~assets/green-spinner.png'
 
 export function AccessCameraLoader() {
   return (

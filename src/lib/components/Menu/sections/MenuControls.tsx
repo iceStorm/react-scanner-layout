@@ -6,8 +6,8 @@ import { IconType } from 'react-icons'
 import { VscTriangleDown, VscTriangleUp } from 'react-icons/vsc'
 import { BsFillPlayFill, BsFillStopFill } from 'react-icons/bs'
 
-import { useMenuStore } from '@store/menu'
-import { useCameraStore } from '@store/camera'
+import { useMenuStore } from '~store/menu'
+import { useCameraStore } from '~store/camera'
 
 export const MenuControls = forwardRef<HTMLDivElement>(function (_props, ref) {
   const [toggleMenuVisibility, menuPosition, isMenuVisible] = useMenuStore((state) => [

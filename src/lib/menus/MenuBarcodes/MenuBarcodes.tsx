@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import clsx from 'clsx'
 
-import { useCameraStore } from '@store/camera'
+import { useCameraStore } from '~store/camera'
 
-import BarcodeFormat from 'src/lib/models/BarcodeFormat'
+import BarcodeFormat from '~models/BarcodeFormat'
 
 import styles from './MenuBarcodes.module.scss'
 

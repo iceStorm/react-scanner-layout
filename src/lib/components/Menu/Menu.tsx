@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 
-import { useMenuStore } from '@store/menu'
+import { useMenuStore } from '~store/menu'
 
 import { MenuItemView } from './MenuItemView'
 import { MenuPanels } from './sections/MenuPanels'

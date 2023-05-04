@@ -5,10 +5,10 @@ import { ConditionalPick } from 'type-fest'
 import { motion, AnimatePresence } from 'framer-motion'
 import { shallow } from 'zustand/shallow'
 
-import { useMenuStore, MenuState } from '@store/menu'
-import { useCameraStore } from '@store/camera'
-import { ScreenShotProps } from '@models/ScreenShot'
-import { captureImageFromVideo } from '@utils/canvas.utilts'
+import { useMenuStore, MenuState } from '~store/menu'
+import { useCameraStore } from '~store/camera'
+import { ScreenShotProps } from '~models/ScreenShot'
+import { captureImageFromVideo } from '~utils/canvas.utilts'
 
 import '../../styles.scss'
 

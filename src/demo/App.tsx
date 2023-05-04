@@ -7,7 +7,8 @@
 // import { RiBarcodeLine } from 'react-icons/ri'
 // import { IoMusicalNote, IoVideocam } from 'react-icons/io5'
 
-// // import { ReactScannerLayout, ReactScannerLayoutRef } from 'react-scanner-layout'
+import { ReactScannerLayout, ReactScannerLayoutRef } from 'react-scanner-layout'
+import { MenuBarcodesPanel, MenuCamera, MenuMasksPanel } from 'react-scanner-layout/menu'
 
 // import { log } from '@utils/logger.utils'
 
