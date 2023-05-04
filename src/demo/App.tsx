@@ -11,9 +11,9 @@
 
 // import { log } from '@utils/logger.utils'
 
-// import { MenuBarcodesPanel } from '@menu-items/MenuBarcodes'
-// import { MenuCamera } from '@menu-items/MenuCamera'
-// import { MenuMasksPanel } from '@menu-items/MenuMasks'
+// import { MenuBarcodesPanel } from '@menus/MenuBarcodes'
+// import { MenuCamera } from '@menus/MenuCamera'
+// import { MenuMasksPanel } from '@menus/MenuMasks'
 
 // import pip from '@assets/store-scanner-beep.mp3'
 // const pipAudio = new Audio(pip)

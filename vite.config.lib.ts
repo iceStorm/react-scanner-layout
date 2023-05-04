@@ -56,9 +56,10 @@ export default defineConfig({
       entryRoot: 'src/lib',
       tsConfigFilePath: join(__dirname, 'tsconfig.json'),
       skipDiagnostics: true,
-      include: ['src/lib/index.ts', 'src/lib/menu-items/index.ts'],
+      insertTypesEntry: true,
+      // include: ['src/lib/index.ts', 'src/lib/menu-items/index.ts'],
     }),
-    cssInjection(),
+    // cssInjection(),
     viteStaticCopy({
       targets: [
         {
@@ -79,12 +80,11 @@ export default defineConfig({
   build: {
     outDir: './dist/lib',
     copyPublicDir: false,
-    emptyOutDir: false,
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: {
         index: './src/lib/index.ts',
-        menu: './src/lib/menu-items/index.ts',
+        menu: './src/lib/menus/index.ts',
       },
       // Change this to the formats you want to support.
       // Don't forgot to update your package.json as well.

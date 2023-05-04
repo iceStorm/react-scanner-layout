@@ -1,8 +1,9 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-import { MenuState } from './menu.state'
 import { log } from '@utils/logger.utils'
+
+import { MenuState } from './menu.state'
 
 export const useMenuStore = create(
   immer<MenuState>((set) => ({
