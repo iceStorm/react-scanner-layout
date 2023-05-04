@@ -5,24 +5,12 @@ import { ConditionalPick } from 'type-fest'
 import { motion, AnimatePresence } from 'framer-motion'
 import { shallow } from 'zustand/shallow'
 
-import { CiBarcode } from 'react-icons/ci'
-import { RiBarcodeLine } from 'react-icons/ri'
-import { IoMusicalNote, IoVideocam } from 'react-icons/io5'
-
 import { useMenuStore, MenuState } from '@store/menu'
 import { useCameraStore } from '@store/camera'
-
-import { MenuBarcodesPanel } from '@menu-items/MenuBarcodes'
-import { MenuCamera } from '@menu-items/MenuCamera'
-import { MenuMasksPanel } from '@menu-items/MenuMasks'
-
 import { ScreenShotProps } from '@models/ScreenShot'
 import { captureImageFromVideo } from '@utils/canvas.utilts'
 
 import '../../styles.scss'
-
-import pip from '@assets/store-scanner-beep.mp3'
-const pipAudio = new Audio(pip)
 
 import { Menu } from '../Menu'
 import { Main, MainRef } from '../Main'
@@ -117,50 +105,12 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
     const mainRef = useRef<MainRef>(null)
 
     useEffect(() => {
-      addDefaultMenuItems()
       requestCamera()
     }, [])
 
-    function addDefaultMenuItems() {
-      addMenuItem({
-        key: 'barcodes',
-        title: 'Barcodes',
-        icon: <RiBarcodeLine size={20} />,
-        settingsPanel: <MenuBarcodesPanel />,
-      })
-
-      addMenuItem({
-        key: 'camera',
-        title: 'Camera',
-        icon: <IoVideocam size={20} />,
-        settingsPanel: <MenuCamera />,
-      })
-
-      addMenuItem({
-        key: 'masks',
-        title: 'Masks',
-        icon: <CiBarcode size={20} />,
-        settingsPanel: <MenuMasksPanel />,
-      })
-
-      addMenuItem({
-        key: 'sounds',
-        title: (
-          <p className="">
-            Sound <br /> Effects
-          </p>
-        ),
-        icon: <IoMusicalNote size={20} />,
-        toggleActiveOnClick: true,
-        onClick() {
-          pipAudio.play()
-        },
-      })
-    }
-
     return (
-      <div id="react-scanner-layout">
-        <div className={clsx('fixed inset-0', 'bg-black', 'text-xs xl:text-sm text-white')}>
+      <div id="react-scanner-layout" style={{ flex: '1 1 0%' }}>
+        <div className={clsx('relative', 'bg-black', 'text-xs xl:text-sm text-white')}>
           <AnimatePresence>
             {isAccessingCamera && (
               <motion.div

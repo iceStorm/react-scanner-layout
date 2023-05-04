@@ -1,6 +1,6 @@
 {
   "name": "react-scanner-layout",
-  "version": "0.0.7",
+  "version": "0.1.5",
   "type": "module",
   "license": "MIT",
   "main": "./index.js",
@@ -9,6 +9,10 @@
     ".": {
       "import": "./index.js",
       "require": "./index.cjs"
+    },
+    "./menu": {
+      "import": "./menu.js",
+      "require": "./menu.cjs"
     }
   },
   "homepage": "https://react-scanner-layout.vercel.app",
@@ -24,19 +28,23 @@
     "react scanner"
   ],
   "scripts": {
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "dev": "vite --config vite.config.demo.ts",
     "preview": "vite preview --config vite.config.demo.ts",
-    "build:lib": "tsc && vite build --config vite.config.lib.ts",
     "build:demo": "tsc && vite build --config vite.config.demo.ts",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "build:lib": "tsc && vite build --config vite.config.lib.ts",
+    "publish:lib": "PUBLISH=true npm run build:lib && cd ./dist/lib && npm publish"
   },
-  "peerDependencies": {
-    "react": ">=18.2.0",
-    "react-dom": ">=18.2.0"
-  },
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "@headlessui/react": "^1.7.14",
+    "framer-motion": "^10.12.4",
+    "immer": "^10.0.1",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.3.7"
+  },
+  "devDependencies": {
     "@types/lodash": "^4.14.194",
     "@types/node": "^18.15.13",
     "@types/react": "^18.0.28",
@@ -51,19 +59,16 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "flowbite": "^1.6.5",
-    "flowbite-react": "^0.4.4",
-    "framer-motion": "^10.12.4",
-    "immer": "^10.0.1",
-    "lodash": "^4.17.21",
     "postcss": "^8.4.23",
     "postcss-replace": "^2.0.1",
     "rc-switch": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
+    "react-scanner-layout": "^0.1.5",
     "react-simple-toasts": "^3.6.0",
     "react-webcam": "^7.0.1",
+    "rimraf": "^5.0.0",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.62.0",
     "simple-zustand-devtools": "^1.1.0",
@@ -75,7 +80,6 @@
     "vite-plugin-dts": "^2.3.0",
     "vite-plugin-static-copy": "^0.14.0",
     "vite-plugin-wasm": "^3.2.2",
-    "vite-tsconfig-paths": "^4.2.0",
-    "zustand": "^4.3.7"
+    "vite-tsconfig-paths": "^4.2.0"
   }
 }
