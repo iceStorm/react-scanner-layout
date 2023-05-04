@@ -3,12 +3,14 @@ import { useMemo } from 'react'
 import clsx from 'clsx'
 import { shallow } from 'zustand/shallow'
 import { Switch } from '@headlessui/react'
+import { IoVideocam } from 'react-icons/io5'
 
 import { useCameraStore } from '~store/camera'
+import { MenuItem } from '~store/menu'
 
 import styles from './MenuCamera.module.scss'
 
-export function MenuCamera() {
+export function MenuCameraPanel() {
   const [
     isCameraPaused,
     cameraList,
@@ -123,4 +125,11 @@ export function MenuCamera() {
       </section>
     </div>
   )
+}
+
+export const MenuCamera: MenuItem = {
+  key: 'camera',
+  title: 'Camera',
+  icon: <IoVideocam size={20} />,
+  settingsPanel: <MenuCameraPanel />,
 }

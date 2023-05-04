@@ -1,7 +1,10 @@
 import { useEffect } from 'react'
+
 import clsx from 'clsx'
+import { RiBarcodeLine } from 'react-icons/ri'
 
 import { useCameraStore } from '~store/camera'
+import { MenuItem } from '~store/menu'
 
 import BarcodeFormat from '~models/BarcodeFormat'
 
@@ -40,4 +43,11 @@ export function MenuBarcodesPanel() {
       </section>
     </div>
   )
+}
+
+export const MenuBarcodes: MenuItem = {
+  key: 'barcodes',
+  title: 'Barcodes',
+  icon: <RiBarcodeLine size={20} />,
+  settingsPanel: <MenuBarcodesPanel />,
 }

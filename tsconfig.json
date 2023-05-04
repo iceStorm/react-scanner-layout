@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "~assets/*": ["./src/lib/assets/*"],
+      "~assets/*": ["./src/lib/assets/*", "./src/demo/assets/*"],
       "~models/*": ["./src/lib/models/*"],
       "~utils/*": ["./src/lib/utils/*"],
       "~components/*": ["./src/lib/components/*"],

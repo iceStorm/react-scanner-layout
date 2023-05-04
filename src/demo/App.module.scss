@@ -1,0 +1,55 @@
+.app {
+  display: flex;
+  flex-direction: column;
+
+  position: fixed;
+  inset: 0;
+
+  .header {
+    background: #000;
+    padding: 10px;
+
+    color: white;
+    text-align: center;
+
+    position: relative;
+    z-index: 11;
+
+    h1 {
+      font-size: 54px;
+      margin-block: 0;
+    }
+  }
+
+  .main {
+    flex: 1;
+    background: #fff;
+  }
+
+  .footer {
+    background: #000;
+    padding: 20px;
+
+    color: white;
+
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.button {
+  border: none;
+  border-radius: 20px;
+
+  padding: 5px 20px;
+  cursor: pointer;
+
+  display: block;
+  margin-inline: auto;
+
+  &:hover {
+    background: #ccc;
+  }
+}

@@ -43,7 +43,7 @@ if (process.env.PUBLISH) {
   packageJsonFile.version = newVersion
 
   writeFileSync('./package.json', JSON.stringify(packageJsonFile, null, 2))
-  console.log('Successfully incremented library version for PUBLISH mode.')
+  console.log('Successfully incremented library version for PUBLISH mode:', newVersion)
 }
 
 // https://vitejs.dev/config/

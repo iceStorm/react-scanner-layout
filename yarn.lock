@@ -2585,10 +2585,10 @@ react-refresh@^0.14.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"
   integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
 
-react-scanner-layout@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/react-scanner-layout/-/react-scanner-layout-0.1.9.tgz#c720a49c6bf346fb73b8781b4f1c58f0c391f6b9"
-  integrity sha512-eBtMQGZ6SAtvTfDs6wTMzDGLL7lx9ehmXvgUMyFKFq88+ovRRDNH3iO12IOswgtumq6gJpXK9BoafH2P3rn4bA==
+react-scanner-layout@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/react-scanner-layout/-/react-scanner-layout-0.3.3.tgz#20bc8b11f10ab6d78ed8abaaa19b3905dc7bf561"
+  integrity sha512-mfn6vV3eNGiAGgDV2lf1uadxTlhN1jCj3GRtslGpjcF6dEog/YL6Z6Auzscz5zw6HhAvuqRP/A557f84AZNC2g==
   dependencies:
     "@headlessui/react" "^1.7.14"
     framer-motion "^10.12.4"

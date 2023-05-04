@@ -109,8 +109,8 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
     }, [])
 
     return (
-      <div id="react-scanner-layout" style={{ flex: '1 1 0%' }}>
-        <div className={clsx('relative', 'bg-black', 'text-xs xl:text-sm text-white')}>
+      <div id="react-scanner-layout" style={{ width: '100%', height: '100%' }}>
+        <div className={clsx('relative w-full h-full', 'text-xs xl:text-sm text-white')}>
           <AnimatePresence>
             {isAccessingCamera && (
               <motion.div

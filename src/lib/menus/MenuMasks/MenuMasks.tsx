@@ -2,6 +2,9 @@ import clsx from 'clsx'
 
 import { IoScan } from 'react-icons/io5'
 import { AiOutlineScan } from 'react-icons/ai'
+import { CiBarcode } from 'react-icons/ci'
+
+import { MenuItem } from '~store/menu'
 
 import styles from './MenuMasks.module.scss'
 
@@ -23,4 +26,11 @@ export function MenuMasksPanel() {
       </section>
     </div>
   )
+}
+
+export const MenuMasks: MenuItem = {
+  key: 'masks',
+  title: 'Masks',
+  icon: <CiBarcode size={20} />,
+  settingsPanel: <MenuMasksPanel />,
 }

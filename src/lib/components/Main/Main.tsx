@@ -31,14 +31,6 @@ export const Main = forwardRef<MainRef>(function (_props, ref) {
   }))
 
   useEffect(() => {
-    window.addEventListener('resize', handleWindowResize)
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [])
-
-  useEffect(() => {
     if (canvasRef.current) {
       canvasRef.current.width = window.innerWidth
       canvasRef.current.height = window.innerHeight
@@ -71,13 +63,6 @@ export const Main = forwardRef<MainRef>(function (_props, ref) {
     }
   }, [selectedCamera?.stream])
 
-  function handleWindowResize() {
-    if (canvasRef.current) {
-      canvasRef.current.width = window.innerWidth
-      canvasRef.current.height = window.innerHeight
-    }
-  }
-
   console.log('Main renders...')
 
   return (
@@ -91,11 +76,11 @@ export const Main = forwardRef<MainRef>(function (_props, ref) {
           className="absolute inset-0"
           onClick={() => hideActiveMenuPanel()}
         >
-          <canvas ref={canvasRef} className={clsx('absolute inset-0')} />
+          <canvas ref={canvasRef} className={clsx('absolute inset-0 w-full h-full')} />
           <video
             ref={videoRef}
             playsInline
-            className={clsx('w-full h-screen object-cover', {
+            className={clsx('w-full h-full object-cover', {
               '-scale-x-100': selectedCamera?.mirrored,
             })}
           >
