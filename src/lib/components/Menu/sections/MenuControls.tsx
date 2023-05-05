@@ -37,35 +37,14 @@ export const MenuControls = forwardRef<HTMLDivElement>(function (_props, ref) {
   return (
     <section
       ref={ref}
-      className={clsx(
-        'flex justify-center items-center gap-3',
-        menuPosition === 'bottom' ? 'order-3' : '-order-1',
-      )}
+      className={clsx('rsl-menu-controls', menuPosition === 'bottom' ? 'order-3' : '-order-1')}
     >
-      <button
-        className={clsx(
-          'flex items-center gap-1',
-          'px-3 py-1',
-          'text-white',
-          'bg-stone-900 rounded-md hover:bg-stone-700',
-          'border border-stone-700',
-        )}
-        onClick={() => toggleMenuVisibility()}
-      >
+      <button className="rsl-menu-controls-button" onClick={() => toggleMenuVisibility()}>
         <MenuIcon size={15} />
         <span>{isMenuVisible ? 'Hide' : 'Menu'}</span>
       </button>
 
-      <button
-        className={clsx(
-          'flex items-center gap-1',
-          'px-3 py-1',
-          'text-white',
-          'bg-stone-900 rounded-md hover:bg-stone-700',
-          'border border-stone-700',
-        )}
-        onClick={() => toggleCameraVisibility()}
-      >
+      <button className="rsl-menu-controls-button" onClick={() => toggleCameraVisibility()}>
         <PauseResumeIcon size={15} />
         <span>{isCameraPaused ? 'Resume' : 'Pause'}</span>
       </button>

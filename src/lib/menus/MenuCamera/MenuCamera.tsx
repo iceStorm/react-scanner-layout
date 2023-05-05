@@ -2,13 +2,12 @@ import { useMemo } from 'react'
 
 import clsx from 'clsx'
 import { shallow } from 'zustand/shallow'
-import { Switch } from '@headlessui/react'
 import { IoVideocam } from 'react-icons/io5'
 
 import { useCameraStore } from '~store/camera'
 import { MenuItem } from '~store/menu'
 
-import styles from './MenuCamera.module.scss'
+import './MenuCamera.scss'
 
 export function MenuCameraPanel() {
   const [
@@ -16,7 +15,7 @@ export function MenuCameraPanel() {
     cameraList,
     selectedCamera,
     avalableResolutions,
-    setSelectedCameraSettings,
+    // setSelectedCameraSettings,
     requestCamera,
   ] = useCameraStore(
     (state) => [
@@ -24,7 +23,7 @@ export function MenuCameraPanel() {
       state.cameraList,
       state.selectedCamera,
       state.avalableResolutions,
-      state.setSelectedCameraSettings,
+      // state.setSelectedCameraSettings,
       state.requestCamera,
     ],
     shallow,
@@ -36,21 +35,21 @@ export function MenuCameraPanel() {
 
   return (
     <div
-      className={clsx('flex flex-col gap-10', {
-        'pointer-events-none text-gray-700': isCameraPaused,
+      className={clsx('rsl-preset-menu menu-camera', {
+        // 'pointer-events-none text-gray-700': isCameraPaused,
       })}
     >
       <section>
-        <h2 className="mb-3">Pick a camera from your device</h2>
+        <p className="rsl-preset-menu-headline">Pick a camera from your device</p>
 
-        <div className={styles.cameraGrid}>
+        <div className="camera-grid">
           {cameraList.map((camera) => {
             return (
               <button
                 key={camera.deviceId}
-                className={clsx('btn-toggle', {
+                className={clsx('rsl-btn-toggle', {
                   active: camera.deviceId === selectedCamera?.deviceId,
-                  'text-gray-500': isCameraPaused,
+                  // 'text-gray-500': isCameraPaused,
                 })}
                 onClick={() => {
                   console.log('Selected camera:', camera)
@@ -65,16 +64,16 @@ export function MenuCameraPanel() {
       </section>
 
       <section>
-        <h2 className="mb-3">
-          Select a resolution for the selected camera "{selectedCameraInfo?.label}"
-        </h2>
+        <p className="rsl-preset-menu-headline">
+          Select a resolution for the camera "{selectedCameraInfo?.label}". Higher is better.
+        </p>
 
-        <div className={styles.resolutionGrid}>
+        <div className="resolution-grid">
           {avalableResolutions.map(({ width, height, name }) => {
             return (
               <button
                 key={name}
-                className={clsx('btn-toggle', {
+                className={clsx('rsl-btn-toggle', {
                   active:
                     (selectedCamera?.width === width && selectedCamera?.height === height) ||
                     (selectedCamera?.width === height && selectedCamera?.height === width),
@@ -85,10 +84,10 @@ export function MenuCameraPanel() {
                   e.currentTarget.blur()
                 }}
               >
-                <p className="mb-1">{name}</p>
-                <p>
+                <p className="">{name}</p>
+                <div>
                   <span>{width}</span> × <span>{height}</span>
-                </p>
+                </div>
               </button>
             )
           })}
@@ -96,11 +95,11 @@ export function MenuCameraPanel() {
       </section>
 
       <section>
-        <h2 className="mb-5 setting-headline">Other settings.</h2>
+        <p className="rsl-preset-menu-headline">Other settings</p>
 
-        <div className="flex items-center">
-          <label className="flex items-center gap-2">
-            <Switch
+        <div>
+          <label>
+            {/* <Switch
               checked={!!selectedCamera?.mirrored}
               onChange={(checked) => setSelectedCameraSettings({ mirrored: checked })}
               className={`${
@@ -117,7 +116,7 @@ export function MenuCameraPanel() {
                   selectedCamera?.mirrored ? 'translate-x-6' : 'translate-x-1'
                 } inline-block h-4 w-4 transform rounded-full bg-white transition`}
               />
-            </Switch>
+            </Switch> */}
 
             <span className="cursor-pointer">Mirrored</span>
           </label>

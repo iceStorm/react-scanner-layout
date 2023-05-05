@@ -9,10 +9,13 @@ import { MenuItemView } from './MenuItemView'
 import { MenuPanels } from './sections/MenuPanels'
 import { MenuControls } from './sections/MenuControls'
 
-// tailwind-css: (m-3 === 12px) + (border === 1px)
-const panelMargin = 12 * 2 + 2
+const panelMargin = 15 * 2 + 5
 
-export function Menu() {
+interface MenuProps {
+  layoutHeight: number
+}
+
+export function Menu({ layoutHeight }: MenuProps) {
   const [menuItems, isMenuVisible, menuPosition] = useMenuStore((state) => [
     state.items,
     state.isVisible,
@@ -47,13 +50,16 @@ export function Menu() {
   }, [])
 
   useEffect(() => {
-    //
     console.log('menuRef.current?.clientHeight:', menuRef.current?.clientHeight)
+    console.log('layoutHeight:', layoutHeight)
   }, [])
 
   return (
-    <header className={clsx('rsl-menu', menuPosition === 'bottom' ? 'bottom-0' : 'top-0')}>
+    <header className={clsx('rsl-menu', menuPosition)}>
       <div className="rsl-menu-wrapper">
+        {/* control buttons */}
+        <MenuControls ref={buttonsRef} />
+
         {/* menu items */}
         <motion.section
           ref={menuRef}
@@ -66,18 +72,15 @@ export function Menu() {
             marginBottom,
             opacity: 1,
           }}
-          style={{ minWidth: '200px' }}
+          style={{ minWidth: '300px' }}
         >
           {menuItems.map((i) => {
             return <MenuItemView key={i.key} item={i} />
           })}
         </motion.section>
 
-        {/* control buttons */}
-        <MenuControls ref={buttonsRef} />
-
         {/* menu panels */}
-        <MenuPanels headerHeight={headeHeight} />
+        <MenuPanels headerHeight={headeHeight} layoutHeight={layoutHeight} />
       </div>
     </header>
   )

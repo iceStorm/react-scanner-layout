@@ -1,6 +1,5 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
-import clsx from 'clsx'
 import { ConditionalPick } from 'type-fest'
 import { motion, AnimatePresence } from 'framer-motion'
 import { shallow } from 'zustand/shallow'
@@ -9,8 +8,6 @@ import { useMenuStore, MenuState } from '~store/menu'
 import { useCameraStore } from '~store/camera'
 import { ScreenShotProps } from '~models/ScreenShot'
 import { captureImageFromVideo } from '~utils/canvas.utilts'
-
-import '../../styles.scss'
 
 import { Menu } from '../Menu'
 import { Main, MainRef } from '../Main'
@@ -104,14 +101,29 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
       },
     }))
 
+    const layoutRef = useRef<HTMLDivElement>(null)
+    const [layoutHeight, setLayoutHeight] = useState(0)
     const mainRef = useRef<MainRef>(null)
 
     useEffect(() => {
       requestCamera()
     }, [requestCamera])
 
+    useEffect(() => {
+      handleWindowResize()
+      window.addEventListener('resize', handleWindowResize)
+
+      return () => {
+        window.removeEventListener('resize', handleWindowResize)
+      }
+    }, [])
+
+    function handleWindowResize() {
+      setLayoutHeight(window.innerHeight)
+    }
+
     return (
-      <div id="rsl">
+      <div className="rsl dark" ref={layoutRef}>
         <AnimatePresence>
           {isAccessingCamera && (
             <motion.div
@@ -119,7 +131,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="h-full"
+              style={{ height: '100%' }}
             >
               {loaderComponent ?? <AccessCameraLoader />}
             </motion.div>
@@ -131,7 +143,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
             transition={{ duration: 0.5 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="h-full"
+            style={{ height: '100%' }}
           >
             {permissionDeniedComponent ?? <PermissionDenied />}
           </motion.div>
@@ -142,7 +154,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
             transition={{ duration: 0.5 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="h-full"
+            style={{ height: '100%' }}
           >
             {cameraNotFoundComponent ?? <CameraNotFound />}
           </motion.div>
@@ -150,7 +162,7 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
 
         {!isAccessingCamera && !isCameraPermissionDenied && !isCameraNotFound && (
           <>
-            <Menu />
+            <Menu layoutHeight={layoutHeight} />
             <Main ref={mainRef} />
           </>
         )}

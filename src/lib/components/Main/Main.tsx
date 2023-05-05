@@ -73,19 +73,20 @@ export const Main = forwardRef<MainRef>(function (_props, ref) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0"
+          className="rsl-main"
           onClick={() => hideActiveMenuPanel()}
         >
-          <canvas ref={canvasRef} className={clsx('absolute inset-0 w-full h-full')} />
           <video
             ref={videoRef}
             playsInline
-            className={clsx('w-full h-full object-cover', {
-              '-scale-x-100': selectedCamera?.mirrored,
+            className={clsx('rsl-main-video', {
+              mirrored: selectedCamera?.mirrored,
             })}
           >
             <h1>Video stream from Camera not started.</h1>
           </video>
+
+          <canvas ref={canvasRef} className="rsl-main-canvas" />
         </motion.main>
       )}
     </AnimatePresence>

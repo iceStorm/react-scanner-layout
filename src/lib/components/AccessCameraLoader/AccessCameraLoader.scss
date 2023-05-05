@@ -1,0 +1,13 @@
+.page-access-camera-loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  font-size: 20px;
+
+  img {
+    width: 75px;
+  }
+}

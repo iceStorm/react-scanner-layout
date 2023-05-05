@@ -1,5 +1,5 @@
 .maskGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  @apply gap-5;
+  gap: 10px;
 }

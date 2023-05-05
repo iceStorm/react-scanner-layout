@@ -12,14 +12,14 @@ export function MenuMasksPanel() {
   return (
     <div>
       <section>
-        <h2 className="mb-3">Select a mask to visualize your UI with a focus frame.</h2>
+        <p className="mb-3">Select a mask to visualize your UI with a focus frame.</p>
 
         <div className={clsx(styles.maskGrid, 'text-white')}>
-          <button className="btn-toggle !py-5">
+          <button className="rsl-btn-toggle !py-5">
             <AiOutlineScan size={30} className="mx-auto" />
           </button>
 
-          <button className="btn-toggle !py-5">
+          <button className="rsl-btn-toggle !py-5">
             <IoScan size={30} className="mx-auto" />
           </button>
         </div>

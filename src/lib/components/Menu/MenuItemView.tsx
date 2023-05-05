@@ -22,31 +22,22 @@ export function MenuItemView(props: HeaderItemViewProps) {
 
   return (
     <button
-      className={clsx(
-        'flex-1 p-3',
-        'flex flex-col items-center',
-        'transition-all duration-100 hover:bg-stone-800',
-        {
-          'bg-stone-700 bg-opacity-50': isActive && settingsPanel,
-        },
-      )}
+      className={clsx('rsl-menu-buttons-btn', {
+        active: isActive,
+        togglerable: toggleActiveOnClick,
+      })}
       style={{ minWidth: '85px' }}
       onClick={() => {
         onClick?.()
         setActiveItem(key)
       }}
     >
-      <div
-        className={clsx('flex flex-col items-center gap-1', 'transition-all duration-300', {
-          'text-gray-500': toggleActiveOnClick && !isActive,
-          'text-white': !toggleActiveOnClick || isActive,
-        })}
-      >
+      <div>
         {Icon}
         {typeof title === 'string' ? <span className="">{title}</span> : title}
       </div>
 
-      {settingsPanel && <RxTriangleDown size={15} className="text-white" />}
+      {settingsPanel && <RxTriangleDown size={15} />}
     </button>
   )
 }

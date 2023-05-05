@@ -8,7 +8,7 @@ import { MenuItem } from '~store/menu'
 
 import BarcodeFormat from '~models/BarcodeFormat'
 
-import styles from './MenuBarcodes.module.scss'
+import './MenuBarcodes.scss'
 
 const barcodeTypes = Object.values(BarcodeFormat).filter(
   (value) => typeof value === 'string',
@@ -26,12 +26,12 @@ export function MenuBarcodesPanel() {
 
   return (
     <div>
-      <section className={styles.barcodeGrid}>
+      <section className="rsl-preset-menu menu-barcodes">
         {barcodeTypes.map((type) => {
           return (
             <button
               key={type}
-              className={clsx('btn-toggle', {
+              className={clsx('rsl-btn-toggle', {
                 active: supportedBarcodeFormats.includes(type),
               })}
               onClick={() => addSupportedBarcodeFormat(type)}

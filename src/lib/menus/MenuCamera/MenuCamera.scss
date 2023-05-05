@@ -1,0 +1,25 @@
+.menu-camera {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+
+  .camera-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+  }
+
+  .resolution-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 20px;
+
+    .rsl-btn-toggle {
+      padding: 10px;
+      p {
+        margin: 0;
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
