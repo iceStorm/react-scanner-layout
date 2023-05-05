@@ -1,0 +1,39 @@
+.rsl {
+  $rsl-border-radius: 6px;
+  $rsl-header-padding: 10px;
+
+  position: relative;
+
+  &-menu {
+    position: absolute;
+    inset: 0;
+
+    &-wrapper {
+      margin: $rsl-header-padding;
+
+      display: flex;
+      flex-direction: column;
+      gap: $rsl-header-padding;
+    }
+
+    &-controls {
+    }
+
+    &-buttons {
+      // 'flex divide-x divide-stone-700',
+      // 'mx-auto w-full overflow-x-auto',
+      // 'bg-stone-900 border border-stone-700',
+      // 'rounded-md overflow-hidden',
+      display: flex;
+      margin-inline: auto;
+
+      border-radius: $rsl-border-radius;
+    }
+
+    &-panels {
+    }
+  }
+
+  &-footer {
+  }
+}

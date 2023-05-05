@@ -19,6 +19,8 @@ import { AccessCameraLoader } from '../AccessCameraLoader'
 import { PermissionDenied } from '../PermissionDenied'
 import { CameraNotFound } from '../CameraNotFound'
 
+import './ReactScannerLayout.scss'
+
 // extracting only functions from the menu
 export type ReactScannerLayoutRef = ConditionalPick<MenuState, (param: never) => void> & {
   captureScreenShot(specs?: ScreenShotProps): {
@@ -106,54 +108,52 @@ export const ReactScannerLayout = forwardRef<ReactScannerLayoutRef, ReactScanner
 
     useEffect(() => {
       requestCamera()
-    }, [])
+    }, [requestCamera])
 
     return (
-      <div id="react-scanner-layout" style={{ width: '100%', height: '100%' }}>
-        <div className={clsx('relative w-full h-full', 'text-xs xl:text-sm text-white')}>
-          <AnimatePresence>
-            {isAccessingCamera && (
-              <motion.div
-                transition={{ duration: 0.5 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="h-full"
-              >
-                {loaderComponent ?? <AccessCameraLoader />}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {!isAccessingCamera && isCameraPermissionDenied && (
+      <div id="rsl">
+        <AnimatePresence>
+          {isAccessingCamera && (
             <motion.div
               transition={{ duration: 0.5 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               className="h-full"
             >
-              {permissionDeniedComponent ?? <PermissionDenied />}
+              {loaderComponent ?? <AccessCameraLoader />}
             </motion.div>
           )}
+        </AnimatePresence>
 
-          {!isAccessingCamera && isCameraNotFound && (
-            <motion.div
-              transition={{ duration: 0.5 }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="h-full"
-            >
-              {cameraNotFoundComponent ?? <CameraNotFound />}
-            </motion.div>
-          )}
+        {!isAccessingCamera && isCameraPermissionDenied && (
+          <motion.div
+            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="h-full"
+          >
+            {permissionDeniedComponent ?? <PermissionDenied />}
+          </motion.div>
+        )}
 
-          {!isAccessingCamera && !isCameraPermissionDenied && !isCameraNotFound && (
-            <>
-              <Menu />
-              <Main ref={mainRef} />
-            </>
-          )}
-        </div>
+        {!isAccessingCamera && isCameraNotFound && (
+          <motion.div
+            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="h-full"
+          >
+            {cameraNotFoundComponent ?? <CameraNotFound />}
+          </motion.div>
+        )}
+
+        {!isAccessingCamera && !isCameraPermissionDenied && !isCameraNotFound && (
+          <>
+            <Menu />
+            <Main ref={mainRef} />
+          </>
+        )}
       </div>
     )
   },

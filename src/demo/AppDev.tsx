@@ -7,7 +7,7 @@ import { IoMusicalNote } from 'react-icons/io5'
 
 import { ReactScannerLayout, ReactScannerLayoutRef } from '~components/ReactScannerLayout'
 import { MenuCamera, MenuBarcodes, MenuMasks } from '~menus/index'
-import 'react-scanner-layout/style.css'
+import '~styles/ReactScannerLayout.scss'
 
 import { log } from '~utils/logger.utils'
 
@@ -20,61 +20,62 @@ function App() {
   const scannerLayoutRef = useRef<ReactScannerLayoutRef>(null)
   const [useSoundEffects, setUseSoundEffects] = useState(false)
 
-  useEffect(() => {
-    addDefaultMenuItems()
+  // useEffect(() => {
+  //   addDefaultMenuItems()
 
-    setInterval(() => {
-      captureImageAndDetectBarcodes()
-    }, 2000)
-  }, [])
+  //   setInterval(() => {
+  //     captureImageAndDetectBarcodes()
+  //   }, 2000)
+  // }, [])
 
-  function addDefaultMenuItems() {
-    scannerLayoutRef.current?.addMenuItem(MenuBarcodes)
-    scannerLayoutRef.current?.addMenuItem(MenuCamera)
-    scannerLayoutRef.current?.addMenuItem(MenuMasks)
+  // function addDefaultMenuItems() {
+  //   scannerLayoutRef.current?.addMenuItem(MenuBarcodes)
+  //   scannerLayoutRef.current?.addMenuItem(MenuCamera)
+  //   scannerLayoutRef.current?.addMenuItem(MenuMasks)
 
-    scannerLayoutRef.current?.addMenuItem({
-      key: 'sounds',
-      title: (
-        <p className="">
-          Sound <br /> Effects
-        </p>
-      ),
-      icon: <IoMusicalNote size={20} />,
-      toggleActiveOnClick: true,
-      onClick() {
-        setUseSoundEffects(!useSoundEffects)
-      },
-    })
-  }
+  //   scannerLayoutRef.current?.addMenuItem({
+  //     key: 'sounds',
+  //     title: (
+  //       <p className="">
+  //         Sound <br /> Effectss
+  //       </p>
+  //     ),
+  //     icon: <IoMusicalNote size={20} />,
+  //     toggleActiveOnClick: true,
+  //     onClick() {
+  //       setUseSoundEffects(!useSoundEffects)
+  //     },
+  //   })
+  // }
 
-  async function captureImageAndDetectBarcodes() {
-    if (scannerLayoutRef.current) {
-      const screenShot = scannerLayoutRef.current.captureScreenShot().toImageData()
-      // console.log('screenshot:', screenShot)
+  // async function captureImageAndDetectBarcodes() {
+  //   console.log('useSoundEffects:', useSoundEffects)
 
-      if (screenShot) {
-        const symbols = await scanImageData(screenShot)
+  //   if (scannerLayoutRef.current) {
+  //     const screenShot = scannerLayoutRef.current.captureScreenShot().toImageData()
 
-        if (symbols.length) {
-          const barcodes = symbols.map((s) => {
-            log('[ZBar detected]', s?.typeName, s?.decode())
-            return (
-              <p>
-                [{s.typeName}] {s.decode()}
-              </p>
-            )
-          })
+  //     if (screenShot) {
+  //       const symbols = await scanImageData(screenShot)
 
-          toast(<div style={{ display: 'flex', flexDirection: 'column' }}>{barcodes}</div>)
+  //       if (symbols.length) {
+  //         const barcodes = symbols.map((s) => {
+  //           log('[ZBar detected]', s?.typeName, s?.decode())
+  //           return (
+  //             <p>
+  //               [{s.typeName}] {s.decode()}
+  //             </p>
+  //           )
+  //         })
 
-          if (useSoundEffects) {
-            pipAudio.play()
-          }
-        }
-      }
-    }
-  }
+  //         toast(<div style={{ display: 'flex', flexDirection: 'column' }}>{barcodes}</div>)
+
+  //         if (useSoundEffects) {
+  //           await pipAudio.play()
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   return (
     <div className={styles.app}>

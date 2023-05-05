@@ -25,6 +25,8 @@
       "~components/*": ["./src/lib/components/*"],
       "~store/*": ["./src/lib/store/*"],
       "~menus/*": ["src/lib/menus/*"],
+      "~styles/*": ["src/lib/styles/*"],
+
       "~tailwindcss": ["./tailwind.config.js"],
       "~demo/*": ["src/demo/*"],
       "~lib/*": ["src/lib/*"],

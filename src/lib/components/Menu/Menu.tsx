@@ -52,23 +52,12 @@ export function Menu() {
   }, [])
 
   return (
-    <header
-      className={clsx(
-        'absolute inset-x-0 z-10 mx-auto max-w-3xl',
-        menuPosition === 'bottom' ? 'bottom-0' : 'top-0',
-      )}
-    >
-      <div className="m-3 flex flex-col gap-3">
+    <header className={clsx('rsl-menu', menuPosition === 'bottom' ? 'bottom-0' : 'top-0')}>
+      <div className="rsl-menu-wrapper">
         {/* menu items */}
         <motion.section
           ref={menuRef}
-          className={clsx(
-            'flex divide-x divide-stone-700',
-            'mx-auto w-full overflow-x-auto',
-            'bg-stone-900 border border-stone-700',
-            'rounded-md overflow-hidden',
-          )}
-          transition={{}}
+          className="rsl-menu-buttons"
           initial={{
             opacity: 0,
           }}

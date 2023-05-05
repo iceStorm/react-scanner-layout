@@ -7,6 +7,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
+import { VitePWA } from 'vite-plugin-pwa'
 
 if (process.env.PUBLISH) {
   const packageJsonFile = JSON.parse(
@@ -74,11 +75,14 @@ export default defineConfig({
         },
       ],
     }),
+    // VitePWA(),
   ],
 
   build: {
     outDir: './dist/lib',
     copyPublicDir: false,
+    emptyOutDir: true,
+    // cssCodeSplit: true,
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: {
@@ -138,5 +142,13 @@ export default defineConfig({
         replacement: fileURLToPath(new URL('./src/lib/assets', import.meta.url)),
       },
     ],
+  },
+
+  css: {
+    modules: {
+      generateScopedName(name, filename, css) {
+        return name
+      },
+    },
   },
 })

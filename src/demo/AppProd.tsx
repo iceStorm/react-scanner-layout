@@ -32,7 +32,6 @@ function App() {
     scannerLayoutRef.current?.addMenuItem(MenuBarcodes)
     scannerLayoutRef.current?.addMenuItem(MenuCamera)
     scannerLayoutRef.current?.addMenuItem(MenuMasks)
-
     scannerLayoutRef.current?.addMenuItem({
       key: 'sounds',
       title: (
