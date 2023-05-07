@@ -14,6 +14,12 @@ npm i react-scanner-layout
 yarn add react-scanner-layout
 ```
 
+## Acknowledge: This library only provide a layout with some builtin functions like: Camera picker, displaying webcam content, playing sounds...
+To be able to scan barcodes, please find yourself a library to integrate with this lib, such as:
+- [zbar-wasm](https://github.com/undecaf/zbar-wasm)
+- [zxing-js](https://github.com/zxing-js/library)
+- [dannadori-wasm](https://www.npmjs.com/package/@dannadori/barcode-scanner-worker-js)
+
 ## Example:
 ```typescript
 import { useEffect, useRef, useState } from 'react'
