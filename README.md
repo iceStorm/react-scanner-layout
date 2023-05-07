@@ -6,12 +6,16 @@
 ## Live demo: https://react-scanner-layout.vercel.app/
 
 ## Install:
-> npm i react-scanner-layout
+```bash
+npm i react-scanner-layout
+```
 
-> yarn add react-scanner-layout
+```bash
+yarn add react-scanner-layout
+```
 
 ## Example:
-```
+```typescript
 import { useEffect, useRef, useState } from 'react'
 
 import { scanImageData } from '@undecaf/zbar-wasm'
