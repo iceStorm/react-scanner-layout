@@ -3,9 +3,14 @@
 ### Scanning barcodes, QR codes on the web?
 ##### Looking for a professional layout which contains camera picker that adapts smoothly between devices, a barcode type picker, or other controls?
 
-### Live demo: https://react-scanner-layout.vercel.app/
+## Live demo: https://react-scanner-layout.vercel.app/
 
-### Example:
+## Install:
+> npm i react-scanner-layout
+
+> yarn add react-scanner-layout
+
+## Example:
 ```
 import { useEffect, useRef, useState } from 'react'
 
